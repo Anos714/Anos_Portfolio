@@ -11,28 +11,20 @@ const Navbar = () => {
     { label: "Resume", href: "/resume" },
   ];
 
-  const [darkMode, setDarkMode] = useState(true);
+  const [darkMode, setDarkMode] = useState(() => {
+    const savedTheme = localStorage.getItem("theme");
+    return savedTheme ? savedTheme === "dark" : true;
+  });
+
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
-    const savedTheme = localStorage.getItem("theme");
-
-    if (savedTheme === "dark") {
-      document.documentElement.classList.add("dark");
-      setDarkMode(true);
-    } else {
-      document.documentElement.classList.remove("dark");
-      setDarkMode(false);
-      localStorage.setItem("theme", "light");
-    }
-  }, []);
+    document.documentElement.classList.toggle("dark", darkMode);
+    localStorage.setItem("theme", darkMode ? "dark" : "light");
+  }, [darkMode]);
 
   const toggleTheme = () => {
-    const nextMode = !darkMode;
-    setDarkMode(nextMode);
-
-    document.documentElement.classList.toggle("dark", nextMode);
-    localStorage.setItem("theme", nextMode ? "dark" : "light");
+    setDarkMode((prev) => !prev);
   };
 
   useEffect(() => {
@@ -59,6 +51,7 @@ const Navbar = () => {
           {links.map((link) => (
             <li key={link.label} className="shrink-0">
               <Link
+                key={link.label}
                 to={link.href}
                 className="text-sm text-neutral-700 transition hover:text-neutral-950 dark:text-neutral-400 dark:hover:text-neutral-100"
               >
