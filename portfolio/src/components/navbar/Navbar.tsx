@@ -12,6 +12,7 @@ const Navbar = () => {
   ];
 
   const [darkMode, setDarkMode] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
     const savedTheme = localStorage.getItem("theme");
@@ -22,46 +23,64 @@ const Navbar = () => {
     } else {
       document.documentElement.classList.remove("dark");
       setDarkMode(false);
+      localStorage.setItem("theme", "light");
     }
   }, []);
 
   const toggleTheme = () => {
     const nextMode = !darkMode;
-
     setDarkMode(nextMode);
 
-    if (nextMode) {
-      document.documentElement.classList.add("dark");
-      localStorage.setItem("theme", "dark");
-    } else {
-      document.documentElement.classList.remove("dark");
-      localStorage.setItem("theme", "light");
-    }
+    document.documentElement.classList.toggle("dark", nextMode);
+    localStorage.setItem("theme", nextMode ? "dark" : "light");
   };
 
-  return (
-    <nav className="mx-auto flex w-full max-w-5xl items-center justify-between px-4 pt-4">
-      <ul className="flex items-center gap-5">
-        {links.map((link) => (
-          <li key={link.label}>
-            <Link
-              to={link.href}
-              className="text-sm text-neutral-700 transition hover:text-neutral-950 dark:text-neutral-400 dark:hover:text-neutral-100"
-            >
-              {link.label}
-            </Link>
-          </li>
-        ))}
-      </ul>
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 12);
+    };
 
-      <button
-        type="button"
-        onClick={toggleTheme}
-        className="rounded-md p-2 text-neutral-900 transition hover:bg-neutral-100 dark:text-neutral-100 dark:hover:bg-neutral-800"
-        aria-label="Toggle theme"
-      >
-        {darkMode ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
-      </button>
+    handleScroll();
+    window.addEventListener("scroll", handleScroll, { passive: true });
+
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  return (
+    <nav
+      className={`sticky top-0 z-50 -mx-4 px-4 transition-all duration-300 ${
+        scrolled
+          ? "border-b border-neutral-200/60 bg-white/70 shadow-sm backdrop-blur-xl dark:border-neutral-800/70 dark:bg-neutral-900/70"
+          : "border-b border-transparent bg-transparent"
+      }`}
+    >
+      <div className="flex items-center justify-between py-4">
+        <ul className="flex items-center gap-5 overflow-x-auto">
+          {links.map((link) => (
+            <li key={link.label} className="shrink-0">
+              <Link
+                to={link.href}
+                className="text-sm text-neutral-700 transition hover:text-neutral-950 dark:text-neutral-400 dark:hover:text-neutral-100"
+              >
+                {link.label}
+              </Link>
+            </li>
+          ))}
+        </ul>
+
+        <button
+          type="button"
+          onClick={toggleTheme}
+          className="ml-4 shrink-0 rounded-md p-2 text-neutral-900 transition hover:bg-neutral-100 dark:text-neutral-100 dark:hover:bg-neutral-800"
+          aria-label="Toggle theme"
+        >
+          {darkMode ? (
+            <Sun className="h-5 w-5" />
+          ) : (
+            <Moon className="h-5 w-5" />
+          )}
+        </button>
+      </div>
     </nav>
   );
 };
