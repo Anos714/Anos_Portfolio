@@ -33,6 +33,28 @@ const Home = () => {
     },
   ];
 
+  const techStackArr = [
+    { label: "React.js", icon: "React.svg" },
+    { label: "Tailwind CSS", icon: "Tailwind CSS.svg" },
+    { label: "TanStack Query", icon: "react-query-icon.svg" },
+    { label: "Zustand", icon: "zustand.svg" },
+    { label: "Redux Toolkit", icon: "Redux.svg" },
+    { label: "Framer Motion", icon: "motion.svg" },
+    { label: "Git", icon: "Git.svg" },
+    { label: "Node.js", icon: "Node.js.svg" },
+    { label: "Bun.js", icon: "Bun.svg" },
+    { label: "Express.js", icon: "Express.svg" },
+    { label: "MongoDB", icon: "MongoDB.svg" },
+    { label: "Redis", icon: "Redis.svg" },
+    { label: "TypeScript", icon: "TypeScript.svg" },
+    { label: "JavaScript", icon: "JavaScript.svg" },
+    { label: "Java", icon: "Java.svg" },
+    { label: "Nginx", icon: "NGINX.svg" },
+    { label: "Docker", icon: "Docker.svg" },
+    { label: "Gemini API", icon: "gemini-color.svg" },
+    { label: "Linux", icon: "Linux.svg" },
+  ];
+
   return (
     <div className="min-h-screen w-full">
       <Navbar />
@@ -75,6 +97,26 @@ const Home = () => {
                 >
                   {item.icon}
                 </a>
+              ))}
+            </div>
+          </div>
+        </section>
+        {/* Tech Stack */}
+
+        <section>
+          <div>
+            <h2 className="mt-15 mb-4 text-sm font-semibold tracking-wider text-neutral-500 uppercase dark:text-neutral-400">
+              Tech Stack & Tools
+            </h2>
+            <div className="flex flex-wrap gap-4">
+              {techStackArr.map((tech) => (
+                <img
+                  className="size-12 shrink rounded-xl border border-neutral-200 bg-neutral-100 p-2 dark:border-neutral-800 dark:bg-neutral-900"
+                  key={tech.label}
+                  data-tooltip-id="tech-stack-tooltip"
+                  data-tooltip-content={tech.label}
+                  src={tech.icon}
+                />
               ))}
             </div>
           </div>
@@ -188,6 +230,7 @@ const Home = () => {
       </main>
 
       <Tooltip id="social-tooltip" />
+      <Tooltip id="tech-stack-tooltip" />
       <Footer />
     </div>
   );
