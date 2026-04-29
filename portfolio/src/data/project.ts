@@ -17,8 +17,8 @@ export const projects = [
       "Supports payment details, invoice status tracking, notes, terms, and soft delete",
       "Designed for freelancers and small businesses to create invoices faster without spreadsheets",
     ],
-    liveLink: "https://smartbillr.vercel.app",
-    githubLink: "https://github.com/yourusername/smartbillr",
+    liveLink: "#",
+    githubLink: "https://github.com/Anos714/SmartBillr",
   },
   {
     title: "Konnect",
@@ -40,7 +40,7 @@ export const projects = [
       "Added authentication-based user sessions for personalized communication",
       "Created a responsive UI for smooth chat and video experience across devices",
     ],
-    liveLink: "https://konnect-app.vercel.app",
-    githubLink: "https://github.com/yourusername/konnect",
+    liveLink: "https://konnect-zeta.vercel.app/",
+    githubLink: "https://github.com/Anos714/Konnect",
   },
 ];

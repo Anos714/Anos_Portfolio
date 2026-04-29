@@ -196,7 +196,7 @@ const Home = () => {
               {experience.slice(0, 1).map((item) => (
                 <Link
                   key={item.role}
-                  to="/experience"
+                  to="/work"
                   className="group block border-b border-neutral-200 pb-6 dark:border-neutral-800"
                 >
                   <div className="flex items-start justify-between gap-4">
