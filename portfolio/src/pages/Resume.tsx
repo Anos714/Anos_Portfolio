@@ -1,7 +1,7 @@
 import Navbar from "../components/navbar/Navbar";
 
 const Resume = () => {
-  const resumeUrl = "rahul_resume.pdf";
+  const resumeUrl = "/resume/rahul_resume.pdf";
 
   return (
     <div className="min-h-screen w-full">

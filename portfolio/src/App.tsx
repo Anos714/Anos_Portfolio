@@ -19,7 +19,7 @@ const App = () => {
           }
         />
         <Route
-          path="/experience"
+          path="/work"
           element={
             <Layout>
               <Experience />
