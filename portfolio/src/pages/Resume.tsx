@@ -7,7 +7,7 @@ const Resume = () => {
     <div className="min-h-screen w-full">
       <Navbar />
 
-      <section className="mx-auto mt-20 max-w-5xl px-4">
+      <section className="mx-auto mt-10 max-w-5xl px-4">
         {/* HEADER */}
         <div className="mb-10 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
           <div>

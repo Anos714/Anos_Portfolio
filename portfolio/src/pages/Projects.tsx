@@ -15,7 +15,7 @@ const Projects = () => {
     <div className="min-h-screen w-full">
       <Navbar />
 
-      <section className="mx-auto mt-20 w-full max-w-5xl px-4">
+      <section className="mx-auto mt-10 w-full max-w-5xl px-4">
         {/* HEADER */}
         <div className="mb-2">
           <h1 className="text-3xl font-extrabold tracking-tight text-neutral-900 dark:text-neutral-100">
