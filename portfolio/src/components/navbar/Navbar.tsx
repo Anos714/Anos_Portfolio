@@ -11,7 +11,7 @@ const Navbar = () => {
     { label: "Resume", href: "/resume" },
   ];
 
-  const [darkMode, setDarkMode] = useState(false);
+  const [darkMode, setDarkMode] = useState(true);
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
