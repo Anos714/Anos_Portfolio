@@ -35,7 +35,7 @@ const App = () => {
           }
         />
         <Route
-          path="/blog"
+          path="/blogs"
           element={
             <Layout>
               <Blog />
