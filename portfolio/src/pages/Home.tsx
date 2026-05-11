@@ -8,6 +8,7 @@ import Footer from "../components/footer/Footer";
 import { Link } from "react-router";
 import { projects } from "../data/project";
 import { experience } from "../data/experience";
+import { GitHubCalendar } from "react-github-calendar";
 
 const Home = () => {
   const social = [
@@ -225,6 +226,24 @@ const Home = () => {
                 </Link>
               ))}
             </div>
+          </div>
+        </section>
+
+        <section>
+          <h2 className="mt-15 mb-5 text-sm font-semibold tracking-wider text-neutral-500 uppercase dark:text-neutral-400">
+            GitHub Contributions
+          </h2>
+          <div className="overflow-x-auto rounded-2xl border border-neutral-200 bg-white p-4 dark:border-neutral-800 dark:bg-neutral-900">
+            <GitHubCalendar
+              username="Anos714"
+              blockSize={14}
+              blockMargin={5}
+              fontSize={14}
+              theme={{
+                light: ["#ebedf0", "#9be9a8", "#40c463", "#30a14e", "#216e39"],
+                dark: ["#161b22", "#0e4429", "#006d32", "#26a641", "#39d353"],
+              }}
+            />
           </div>
         </section>
       </main>
