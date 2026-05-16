@@ -228,7 +228,7 @@ const Home = () => {
             </div>
           </div>
         </section>
-
+        {/* github contribution calendar */}
         <section>
           <h2 className="mt-15 mb-5 text-sm font-semibold tracking-wider text-neutral-500 uppercase dark:text-neutral-400">
             GitHub Contributions

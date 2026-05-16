@@ -1,5 +1,32 @@
 export const projects = [
   {
+    title: "DocuMind AI",
+    subheading:
+      "Production-oriented AI-powered RAG knowledge base assistant with grounded citation responses.",
+    techStack: [
+      "React",
+      "Django REST Framework",
+      "FastAPI",
+      "PostgreSQL",
+      "pgvector",
+      "Redis",
+      "Gemini AI",
+      "Tailwind CSS",
+      "Cloudinary",
+      "Neon",
+      "Upstash",
+    ],
+    description: [
+      "Built a scalable Retrieval-Augmented Generation (RAG) platform for document-based question answering with grounded responses",
+      "Implemented document ingestion pipeline with PDF, DOCX, and TXT upload support using Django and FastAPI microservices",
+      "Integrated pgvector with PostgreSQL for semantic search and embedding-based document retrieval",
+      "Developed citation-aware AI responses that only answer from retrieved document chunks to reduce hallucinations",
+      "Added authentication, upload tracking, chat history, caching, and production-ready cloud deployment architecture",
+    ],
+    liveLink: "https://documindai-omega.vercel.app/",
+    githubLink: "https://github.com/Anos714/Assignment/tree/main",
+  },
+  {
     title: "SmartBillr",
     subheading: "AI + manual invoice generator for freelancers and businesses.",
     techStack: [
