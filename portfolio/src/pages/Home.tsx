@@ -1,8 +1,7 @@
 import { FaXTwitter } from "react-icons/fa6";
 import Navbar from "../components/navbar/Navbar";
-import { CiLinkedin } from "react-icons/ci";
-import { FaGithubSquare } from "react-icons/fa";
-import { LuMail } from "react-icons/lu";
+import { FaGithub, FaLinkedin } from "react-icons/fa";
+import { LuFileText, LuMail, LuSend } from "react-icons/lu";
 import {
   SiBun,
   SiMongodb,
@@ -97,17 +96,30 @@ const Home = () => {
     {
       label: "LinkedIn",
       href: "https://www.linkedin.com/in/rahulxcode/",
-      icon: <CiLinkedin />,
+      icon: <FaLinkedin />,
     },
     {
-      label: "Github",
+      label: "GitHub",
       href: "https://github.com/Anos714",
-      icon: <FaGithubSquare />,
+      icon: <FaGithub />,
+    },
+  ];
+
+  const contactActions = [
+    {
+      label: "Resume / CV",
+      href: "/resume/rahul_resume.pdf",
+      icon: <LuFileText />,
+      download: true,
+      className:
+        "border-neutral-700 bg-neutral-900 text-white shadow-[0_4px_0_0_#0a0a0a] hover:bg-neutral-800 hover:shadow-[0_2px_0_0_#0a0a0a] dark:border-neutral-700 dark:bg-neutral-100 dark:text-neutral-950 dark:shadow-[0_4px_0_0_rgba(255,255,255,0.25)] dark:hover:bg-neutral-200 dark:hover:shadow-[0_2px_0_0_rgba(255,255,255,0.25)]",
     },
     {
-      label: "Email",
+      label: "Get in touch",
       href: "mailto:sainrahul374@gmail.com",
-      icon: <LuMail />,
+      icon: <LuSend />,
+      className:
+        "border-neutral-300 bg-neutral-100 text-neutral-950 shadow-[0_4px_0_0_rgba(0,0,0,0.15)] hover:bg-neutral-200 hover:shadow-[0_2px_0_0_rgba(0,0,0,0.15)] dark:border-neutral-700 dark:bg-neutral-800 dark:text-neutral-100 dark:shadow-[0_4px_0_0_rgba(0,0,0,0.4)] dark:hover:bg-neutral-700 dark:hover:shadow-[0_2px_0_0_rgba(0,0,0,0.4)]",
     },
   ];
 
@@ -141,7 +153,7 @@ const Home = () => {
 
       <main className="mx-auto mt-10 w-full max-w-5xl px-4">
         {/* HERO */}
-        <section className="flex flex-col gap-5">
+        <section className="flex flex-col gap-7">
           <div className="flex items-center gap-4">
             <img
               className="size-24 rounded-full object-cover"
@@ -159,7 +171,7 @@ const Home = () => {
             </div>
           </div>
 
-          <div className="flex flex-col gap-3">
+          <div className="flex flex-col gap-5">
             <motion.p
               className="flex max-w-3xl flex-wrap items-center gap-x-2 gap-y-2 text-[15px] leading-8 text-neutral-700 sm:text-base dark:text-neutral-300"
               variants={heroIntroVariants}
@@ -202,19 +214,54 @@ const Home = () => {
               </motion.span>
             </motion.p>
 
-            <div className="flex gap-3">
-              {social.map((item) => (
+            <div className="mt-1 flex flex-col gap-5">
+              <div className="flex flex-wrap gap-x-4 gap-y-3">
+                {contactActions.map((item) => (
+                  <a
+                    key={item.label}
+                    href={item.href}
+                    download={item.download}
+                    className={`inline-flex min-h-10 items-center gap-2 rounded-md border px-3.5 py-2 text-sm font-medium transition-all duration-300 hover:translate-y-[2px] active:translate-y-[4px] active:shadow-none ${item.className}`}
+                    data-tooltip-id="social-tooltip"
+                    data-tooltip-content={item.label}
+                    aria-label={item.label}
+                  >
+                    <span className="text-base">{item.icon}</span>
+                    <span>{item.label}</span>
+                  </a>
+                ))}
+              </div>
+
+              <div className="flex flex-wrap gap-x-3 gap-y-3 font-bold">
+                {social.map((item) => (
+                  <a
+                    key={item.label}
+                    href={item.href}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="inline-flex min-h-10 items-center gap-2 rounded-xl border border-neutral-200 bg-neutral-100 px-3.5 py-2 text-sm text-neutral-800 shadow-[0_4px_0_0_rgba(0,0,0,0.15)] transition-all duration-300 hover:translate-y-[2px] hover:bg-neutral-200 hover:shadow-[0_2px_0_0_rgba(0,0,0,0.15)] active:translate-y-[4px] active:shadow-none dark:border-neutral-700 dark:bg-neutral-800 dark:text-neutral-100 dark:shadow-[0_4px_0_0_rgba(0,0,0,0.4)] dark:hover:bg-neutral-700 dark:hover:shadow-[0_2px_0_0_rgba(0,0,0,0.4)]"
+                    data-tooltip-id="social-tooltip"
+                    data-tooltip-content={item.label}
+                    aria-label={item.label}
+                  >
+                    <span className="text-lg">{item.icon}</span>
+                    <span>{item.label}</span>
+                  </a>
+                ))}
+
                 <a
-                  key={item.label}
-                  href={item.href}
-                  target="_blank"
-                  className="text-lg text-neutral-700 transition hover:text-neutral-950 dark:text-neutral-400 dark:hover:text-neutral-100"
+                  href="mailto:sainrahul374@gmail.com"
+                  className="inline-flex min-h-10 items-center gap-2 rounded-xl border border-neutral-200 bg-neutral-100 px-3.5 py-2 text-sm font-bold text-neutral-800 shadow-[0_4px_0_0_rgba(0,0,0,0.15)] transition-all duration-300 hover:translate-y-[2px] hover:bg-neutral-200 hover:shadow-[0_2px_0_0_rgba(0,0,0,0.15)] active:translate-y-[4px] active:shadow-none dark:border-neutral-700 dark:bg-neutral-800 dark:text-neutral-100 dark:shadow-[0_4px_0_0_rgba(0,0,0,0.4)] dark:hover:bg-neutral-700 dark:hover:shadow-[0_2px_0_0_rgba(0,0,0,0.4)]"
                   data-tooltip-id="social-tooltip"
-                  data-tooltip-content={item.label}
+                  data-tooltip-content="Email"
+                  aria-label="Email"
                 >
-                  {item.icon}
+                  <span className="text-lg">
+                    <LuMail />
+                  </span>
+                  <span>Email</span>
                 </a>
-              ))}
+              </div>
             </div>
           </div>
         </section>
