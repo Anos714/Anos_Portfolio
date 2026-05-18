@@ -1,5 +1,15 @@
 export const blogs = [
   {
+    slug: "redis-is-more-than-just-caching",
+    title: "Redis Is More Than Just Caching",
+    description:
+      "A practical guide to Redis as backend infrastructure for caching, rate limiting, job queues, Pub/Sub, sessions, locks, leaderboards, analytics, and streams.",
+    date: "May 18, 2026",
+    readTime: "7 min read",
+    tags: ["redis", "backend", "caching", "queues", "realtime"],
+    href: "/blogs/redis-is-more-than-just-caching",
+  },
+  {
     slug: "how-mongodb-actually-stores-your-data",
     title: "How MongoDB Actually Stores Your Data",
     description:

@@ -6,6 +6,7 @@ import Projects from "./pages/Projects";
 import Home from "./pages/Home";
 import Layout from "./components/layout/layout";
 import MongoDBPage from "./blogs/mongodb/Page";
+import RedisPage from "./blogs/redis/Page";
 
 const App = () => {
   return (
@@ -48,6 +49,14 @@ const App = () => {
           element={
             <Layout>
               <MongoDBPage />
+            </Layout>
+          }
+        />
+        <Route
+          path="/blogs/redis-is-more-than-just-caching"
+          element={
+            <Layout>
+              <RedisPage />
             </Layout>
           }
         />
