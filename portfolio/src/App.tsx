@@ -5,6 +5,7 @@ import Blog from "./pages/Blog";
 import Projects from "./pages/Projects";
 import Home from "./pages/Home";
 import Layout from "./components/layout/layout";
+import MongoDBPage from "./blogs/mongodb/Page";
 
 const App = () => {
   return (
@@ -39,6 +40,14 @@ const App = () => {
           element={
             <Layout>
               <Blog />
+            </Layout>
+          }
+        />
+        <Route
+          path="/blogs/how-mongodb-actually-stores-your-data"
+          element={
+            <Layout>
+              <MongoDBPage />
             </Layout>
           }
         />
