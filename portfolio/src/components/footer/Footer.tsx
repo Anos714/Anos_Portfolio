@@ -27,9 +27,21 @@ const Footer = () => {
 
     const loadTrafficCount = async () => {
       try {
+        const storageKey = "rahul-portfolio-visitor-id";
+        const existingVisitorId = localStorage.getItem(storageKey);
+        const visitorId = existingVisitorId ?? crypto.randomUUID();
+
+        if (!existingVisitorId) {
+          localStorage.setItem(storageKey, visitorId);
+        }
+
         const response = await fetch(trafficApiPath, {
           method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
           cache: "no-store",
+          body: JSON.stringify({ visitorId }),
         });
 
         if (!response.ok) {

@@ -5,6 +5,7 @@ type HeaderValue = string | string[] | undefined;
 type ApiRequest = {
   method?: string;
   headers: Record<string, HeaderValue>;
+  body?: unknown;
   socket?: {
     remoteAddress?: string;
   };
@@ -69,6 +70,30 @@ const getClientIp = (request: ApiRequest) => {
   );
 };
 
+const getVisitorId = (body: unknown) => {
+  if (!body) {
+    return null;
+  }
+
+  if (typeof body === "string") {
+    try {
+      const parsedBody = JSON.parse(body) as { visitorId?: unknown };
+      return typeof parsedBody.visitorId === "string"
+        ? parsedBody.visitorId
+        : null;
+    } catch {
+      return null;
+    }
+  }
+
+  if (typeof body === "object" && "visitorId" in body) {
+    const visitorId = (body as { visitorId?: unknown }).visitorId;
+    return typeof visitorId === "string" ? visitorId : null;
+  }
+
+  return null;
+};
+
 export default async function handler(
   request: ApiRequest,
   response: ApiResponse,
@@ -89,20 +114,23 @@ export default async function handler(
   }
 
   try {
-    const ip = getClientIp(request);
+    const visitorId = getVisitorId(request.body);
+    const identity = visitorId
+      ? `client:${visitorId}`
+      : `ip:${getClientIp(request)}`;
     const visitorHash = crypto
       .createHash("sha256")
-      .update(`${hashSalt}:${ip}`)
+      .update(`${hashSalt}:${identity}`)
       .digest("hex");
 
     const addResult = await redisCommand<number>([
       "SADD",
-      "portfolio:visitors:unique_ips",
+      "portfolio:visitors:unique_clients",
       visitorHash,
     ]);
     const countResult = await redisCommand<number>([
       "SCARD",
-      "portfolio:visitors:unique_ips",
+      "portfolio:visitors:unique_clients",
     ]);
 
     return response.status(200).json({
