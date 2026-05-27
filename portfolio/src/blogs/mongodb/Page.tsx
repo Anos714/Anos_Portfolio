@@ -1,5 +1,5 @@
 import { Link } from "react-router";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, CalendarDays, Clock3, Database, Tags } from "lucide-react";
 import Navbar from "../../components/navbar/Navbar";
 import Footer from "../../components/footer/Footer";
 import mongodbImage from "../../assets/blogs/mongodb/mongodb.png";
@@ -30,32 +30,50 @@ const MongoDBPage = () => {
           Blogs
         </Link>
 
-        <article className="mt-8 grid gap-10 lg:grid-cols-[minmax(0,1fr)_220px]">
+        <header className="mt-8 border-b border-neutral-200 pb-8 dark:border-neutral-800">
+          <div className="flex flex-wrap gap-2">
+            {["mongodb", "database", "backend", "performance"].map((tag) => (
+              <span
+                key={tag}
+                className="rounded-full bg-emerald-50 px-2.5 py-1 text-xs font-medium text-emerald-700 dark:bg-emerald-400/10 dark:text-emerald-200"
+              >
+                {tag}
+              </span>
+            ))}
+          </div>
+
+          <h1 className="mt-5 max-w-4xl text-4xl font-extrabold tracking-tight text-neutral-950 sm:text-6xl dark:text-neutral-100">
+            How MongoDB Actually Stores Your Data
+          </h1>
+
+          <p className="mt-5 max-w-2xl text-base leading-7 text-neutral-600 dark:text-neutral-400">
+            A practical look at BSON, WiredTiger, indexes, aggregation
+            pipelines, and schema design tradeoffs behind MongoDB performance.
+          </p>
+
+          <div className="mt-6 flex flex-wrap gap-x-5 gap-y-2 text-sm font-medium text-neutral-500 dark:text-neutral-500">
+            <span className="inline-flex items-center gap-2">
+              <CalendarDays className="size-4" />
+              May 18, 2026
+            </span>
+            <span className="inline-flex items-center gap-2">
+              <Clock3 className="size-4" />7 min read
+            </span>
+          </div>
+        </header>
+
+        <article className="mt-8 grid gap-10 lg:grid-cols-[minmax(0,1fr)_240px]">
           <div>
-            <div className="flex flex-wrap gap-2">
-              {["mongodb", "database", "backend", "performance"].map((tag) => (
-                <span
-                  key={tag}
-                  className="rounded-full bg-neutral-100 px-2.5 py-1 text-xs font-medium text-neutral-600 dark:bg-neutral-800 dark:text-neutral-300"
-                >
-                  {tag}
-                </span>
-              ))}
-            </div>
-
-            <h1 className="mt-5 max-w-3xl text-4xl font-extrabold tracking-tight text-neutral-950 sm:text-5xl dark:text-neutral-100">
-              How MongoDB Actually Stores Your Data
-            </h1>
-
-            <p className="mt-4 text-sm font-medium text-neutral-500 dark:text-neutral-500">
-              May 18, 2026 / 7 min read
-            </p>
-
-            <img
-              src={mongodbImage}
-              alt="MongoDB document storage illustration"
-              className="mt-8 aspect-video w-full rounded-lg border border-neutral-200 object-cover dark:border-neutral-800"
-            />
+            <figure className="overflow-hidden rounded-lg border border-neutral-200 bg-neutral-50 dark:border-neutral-800 dark:bg-neutral-950">
+              <img
+                src={mongodbImage}
+                alt="MongoDB document storage illustration"
+                className="aspect-video w-full object-cover"
+              />
+              <figcaption className="border-t border-neutral-200 px-4 py-3 text-xs text-neutral-500 dark:border-neutral-800">
+                Storage internals, query planning, and schema pressure points.
+              </figcaption>
+            </figure>
 
             <blockquote className="mt-8 border-l-2 border-emerald-500 pl-5 text-lg leading-8 text-neutral-800 dark:text-neutral-200">
               Most developers use MongoDB only for CRUD operations. But if you
@@ -277,16 +295,30 @@ const MongoDBPage = () => {
           </div>
 
           <aside className="hidden lg:block">
-            <div className="sticky top-24 border-l border-neutral-200 pl-5 dark:border-neutral-800">
-              <p className="text-xs font-semibold tracking-wider text-neutral-500 uppercase">
-                In this post
-              </p>
-              <div className="mt-4 space-y-3 text-sm text-neutral-500 dark:text-neutral-400">
+            <div className="sticky top-24 space-y-4">
+              <div className="rounded-lg border border-neutral-200 bg-neutral-50 p-4 dark:border-neutral-800 dark:bg-neutral-950">
+                <p className="inline-flex items-center gap-2 text-xs font-semibold tracking-wider text-neutral-500 uppercase">
+                  <Database className="size-4" />
+                  Field Notes
+                </p>
+                <p className="mt-3 text-sm leading-6 text-neutral-600 dark:text-neutral-400">
+                  Read this before adding another random index and hoping the
+                  query gets faster.
+                </p>
+              </div>
+
+              <div className="border-l border-neutral-200 pl-5 dark:border-neutral-800">
+                <p className="inline-flex items-center gap-2 text-xs font-semibold tracking-wider text-neutral-500 uppercase">
+                  <Tags className="size-4" />
+                  In this post
+                </p>
+                <div className="mt-4 space-y-3 text-sm text-neutral-500 dark:text-neutral-400">
                 <p>BSON, not JSON</p>
                 <p>WiredTiger storage</p>
                 <p>Indexes and scans</p>
                 <p>Aggregation costs</p>
                 <p>Schema tradeoffs</p>
+                </div>
               </div>
             </div>
           </aside>
