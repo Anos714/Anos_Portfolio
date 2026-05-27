@@ -1,11 +1,28 @@
-import { Link } from "react-router";
-import { ArrowLeft, CalendarDays, Clock3, Radio, Tags } from "lucide-react";
-import Navbar from "../../components/navbar/Navbar";
-import Footer from "../../components/footer/Footer";
+import { Radio } from "lucide-react";
+import BlogArticleLayout from "../../components/blog/BlogArticleLayout";
 import redisImage from "../../assets/blogs/redis/redis.png";
+import { toSectionId } from "../../utils/section";
+
+const articleSections = [
+  "Why Redis Is So Fast",
+  "1. Caching",
+  "2. Rate Limiting",
+  "3. Job Queues & Background Processing",
+  "4. Real-Time Messaging & Pub/Sub",
+  "5. Session Storage",
+  "6. Distributed Locks",
+  "7. Leaderboards & Counters",
+  "8. Real-Time Analytics",
+  "9. Redis Streams",
+  "10. When Not To Use Redis",
+  "Final Thoughts",
+].map((title) => ({ title, id: toSectionId(title) }));
 
 const SectionHeading = ({ children }: { children: string }) => (
-  <h2 className="mt-12 scroll-mt-24 text-2xl font-bold tracking-tight text-neutral-950 dark:text-neutral-100">
+  <h2
+    id={toSectionId(children)}
+    className="mt-12 scroll-mt-28 text-2xl font-bold tracking-tight text-neutral-950 sm:text-3xl dark:text-neutral-100"
+  >
     {children}
   </h2>
 );
@@ -29,67 +46,26 @@ const BulletList = ({ items }: { items: string[] }) => (
 
 const RedisPage = () => {
   return (
-    <div className="min-h-screen w-full">
-      <Navbar />
-
-      <main className="mx-auto w-full max-w-5xl px-4 py-10 sm:py-14">
-        <Link
-          to="/blogs"
-          className="inline-flex items-center gap-2 text-sm text-neutral-600 transition hover:text-neutral-950 dark:text-neutral-400 dark:hover:text-neutral-100"
-        >
-          <ArrowLeft className="size-4" />
-          Blogs
-        </Link>
-
-        <header className="mt-8 border-b border-neutral-200 pb-8 dark:border-neutral-800">
-          <div className="flex flex-wrap gap-2">
-            {["redis", "backend", "caching", "queues", "realtime"].map(
-              (tag) => (
-                <span
-                  key={tag}
-                  className="rounded-full bg-red-50 px-2.5 py-1 text-xs font-medium text-red-700 dark:bg-red-400/10 dark:text-red-200"
-                >
-                  {tag}
-                </span>
-              ),
-            )}
-          </div>
-
-          <h1 className="mt-5 max-w-4xl text-4xl font-extrabold tracking-tight text-neutral-950 sm:text-6xl dark:text-neutral-100">
-            Redis Is More Than Just Caching
-          </h1>
-
-          <p className="mt-5 max-w-2xl text-base leading-7 text-neutral-600 dark:text-neutral-400">
-            A practical guide to Redis as backend infrastructure for caching,
-            rate limiting, job queues, Pub/Sub, sessions, locks, leaderboards,
-            analytics, and streams.
-          </p>
-
-          <div className="mt-6 flex flex-wrap gap-x-5 gap-y-2 text-sm font-medium text-neutral-500 dark:text-neutral-500">
-            <span className="inline-flex items-center gap-2">
-              <CalendarDays className="size-4" />
-              May 18, 2026
-            </span>
-            <span className="inline-flex items-center gap-2">
-              <Clock3 className="size-4" />7 min read
-            </span>
-          </div>
-        </header>
-
-        <article className="mt-8 grid gap-10 lg:grid-cols-[minmax(0,1fr)_240px]">
-          <div>
-            <figure className="overflow-hidden rounded-lg border border-neutral-200 bg-neutral-50 dark:border-neutral-800 dark:bg-neutral-950">
-              <img
-                src={redisImage}
-                alt="Redis infrastructure cover art"
-                className="aspect-video w-full object-cover"
-              />
-              <figcaption className="border-t border-neutral-200 px-4 py-3 text-xs text-neutral-500 dark:border-neutral-800">
-                Fast memory, coordination primitives, and real-time backend
-                workflows.
-              </figcaption>
-            </figure>
-
+    <BlogArticleLayout
+      title="Redis Is More Than Just Caching"
+      description="A practical guide to Redis as backend infrastructure for caching, rate limiting, job queues, Pub/Sub, sessions, locks, leaderboards, analytics, and streams."
+      date="May 18, 2026"
+      readTime="7 min read"
+      tags={["redis", "backend", "caching", "queues", "realtime"]}
+      cover={{
+        src: redisImage,
+        alt: "Redis infrastructure cover art",
+        caption:
+          "Fast memory, coordination primitives, and real-time backend workflows.",
+      }}
+      accent="red"
+      sections={articleSections}
+      sidebar={{
+        icon: Radio,
+        title: "Field Notes",
+        note: "Useful when Redis is starting to look less like cache and more like infrastructure.",
+      }}
+    >
             <blockquote className="mt-8 border-l-2 border-red-500 pl-5 text-lg leading-8 text-neutral-800 dark:text-neutral-200">
               Most developers learn Redis as a simple caching layer. But Redis
               is actually one of the most versatile backend infrastructure tools
@@ -344,41 +320,7 @@ Send Email`}</code>
               systems. Good backend developers do not just build APIs. They
               build infrastructure that scales under pressure.
             </Paragraph>
-          </div>
-
-          <aside className="hidden lg:block">
-            <div className="sticky top-24 space-y-4">
-              <div className="rounded-lg border border-neutral-200 bg-neutral-50 p-4 dark:border-neutral-800 dark:bg-neutral-950">
-                <p className="inline-flex items-center gap-2 text-xs font-semibold tracking-wider text-neutral-500 uppercase">
-                  <Radio className="size-4" />
-                  Field Notes
-                </p>
-                <p className="mt-3 text-sm leading-6 text-neutral-600 dark:text-neutral-400">
-                  Useful when Redis is starting to look less like cache and more
-                  like infrastructure.
-                </p>
-              </div>
-
-              <div className="border-l border-neutral-200 pl-5 dark:border-neutral-800">
-                <p className="inline-flex items-center gap-2 text-xs font-semibold tracking-wider text-neutral-500 uppercase">
-                  <Tags className="size-4" />
-                  In this post
-                </p>
-                <div className="mt-4 space-y-3 text-sm text-neutral-500 dark:text-neutral-400">
-                <p>Why Redis is fast</p>
-                <p>Caching and sessions</p>
-                <p>Queues and Pub/Sub</p>
-                <p>Locks and counters</p>
-                <p>When to avoid Redis</p>
-                </div>
-              </div>
-            </div>
-          </aside>
-        </article>
-      </main>
-
-      <Footer />
-    </div>
+    </BlogArticleLayout>
   );
 };
 

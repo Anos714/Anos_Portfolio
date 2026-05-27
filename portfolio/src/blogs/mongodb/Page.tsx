@@ -1,11 +1,26 @@
-import { Link } from "react-router";
-import { ArrowLeft, CalendarDays, Clock3, Database, Tags } from "lucide-react";
-import Navbar from "../../components/navbar/Navbar";
-import Footer from "../../components/footer/Footer";
+import { Database } from "lucide-react";
+import BlogArticleLayout from "../../components/blog/BlogArticleLayout";
 import mongodbImage from "../../assets/blogs/mongodb/mongodb.png";
+import { toSectionId } from "../../utils/section";
+
+const articleSections = [
+  "MongoDB Is Easy Until Performance Starts Dying",
+  "MongoDB Does Not Store Plain JSON",
+  "How MongoDB Stores Documents Physically",
+  "Indexes Are the Real Performance Engine",
+  "More Indexes Does Not Mean Better Performance",
+  "Aggregation Pipeline Is Data Processing Inside MongoDB",
+  "Why Some Aggregation Pipelines Become Slow",
+  "Document Design Tradeoffs",
+  "Use explain() Before Guessing",
+  "Final Thoughts",
+].map((title) => ({ title, id: toSectionId(title) }));
 
 const SectionHeading = ({ children }: { children: string }) => (
-  <h2 className="mt-12 scroll-mt-24 text-2xl font-bold tracking-tight text-neutral-950 dark:text-neutral-100">
+  <h2
+    id={toSectionId(children)}
+    className="mt-12 scroll-mt-28 text-2xl font-bold tracking-tight text-neutral-950 sm:text-3xl dark:text-neutral-100"
+  >
     {children}
   </h2>
 );
@@ -18,63 +33,25 @@ const Paragraph = ({ children }: { children: React.ReactNode }) => (
 
 const MongoDBPage = () => {
   return (
-    <div className="min-h-screen w-full">
-      <Navbar />
-
-      <main className="mx-auto w-full max-w-5xl px-4 py-10 sm:py-14">
-        <Link
-          to="/blogs"
-          className="inline-flex items-center gap-2 text-sm text-neutral-600 transition hover:text-neutral-950 dark:text-neutral-400 dark:hover:text-neutral-100"
-        >
-          <ArrowLeft className="size-4" />
-          Blogs
-        </Link>
-
-        <header className="mt-8 border-b border-neutral-200 pb-8 dark:border-neutral-800">
-          <div className="flex flex-wrap gap-2">
-            {["mongodb", "database", "backend", "performance"].map((tag) => (
-              <span
-                key={tag}
-                className="rounded-full bg-emerald-50 px-2.5 py-1 text-xs font-medium text-emerald-700 dark:bg-emerald-400/10 dark:text-emerald-200"
-              >
-                {tag}
-              </span>
-            ))}
-          </div>
-
-          <h1 className="mt-5 max-w-4xl text-4xl font-extrabold tracking-tight text-neutral-950 sm:text-6xl dark:text-neutral-100">
-            How MongoDB Actually Stores Your Data
-          </h1>
-
-          <p className="mt-5 max-w-2xl text-base leading-7 text-neutral-600 dark:text-neutral-400">
-            A practical look at BSON, WiredTiger, indexes, aggregation
-            pipelines, and schema design tradeoffs behind MongoDB performance.
-          </p>
-
-          <div className="mt-6 flex flex-wrap gap-x-5 gap-y-2 text-sm font-medium text-neutral-500 dark:text-neutral-500">
-            <span className="inline-flex items-center gap-2">
-              <CalendarDays className="size-4" />
-              May 18, 2026
-            </span>
-            <span className="inline-flex items-center gap-2">
-              <Clock3 className="size-4" />7 min read
-            </span>
-          </div>
-        </header>
-
-        <article className="mt-8 grid gap-10 lg:grid-cols-[minmax(0,1fr)_240px]">
-          <div>
-            <figure className="overflow-hidden rounded-lg border border-neutral-200 bg-neutral-50 dark:border-neutral-800 dark:bg-neutral-950">
-              <img
-                src={mongodbImage}
-                alt="MongoDB document storage illustration"
-                className="aspect-video w-full object-cover"
-              />
-              <figcaption className="border-t border-neutral-200 px-4 py-3 text-xs text-neutral-500 dark:border-neutral-800">
-                Storage internals, query planning, and schema pressure points.
-              </figcaption>
-            </figure>
-
+    <BlogArticleLayout
+      title="How MongoDB Actually Stores Your Data"
+      description="A practical look at BSON, WiredTiger, indexes, aggregation pipelines, and schema design tradeoffs behind MongoDB performance."
+      date="May 18, 2026"
+      readTime="7 min read"
+      tags={["mongodb", "database", "backend", "performance"]}
+      cover={{
+        src: mongodbImage,
+        alt: "MongoDB document storage illustration",
+        caption: "Storage internals, query planning, and schema pressure points.",
+      }}
+      accent="emerald"
+      sections={articleSections}
+      sidebar={{
+        icon: Database,
+        title: "Field Notes",
+        note: "Read this before adding another random index and hoping the query gets faster.",
+      }}
+    >
             <blockquote className="mt-8 border-l-2 border-emerald-500 pl-5 text-lg leading-8 text-neutral-800 dark:text-neutral-200">
               Most developers use MongoDB only for CRUD operations. But if you
               want to build scalable backend systems, you need to understand
@@ -292,41 +269,7 @@ const MongoDBPage = () => {
               between an app that works in development and a system that keeps
               working when real users arrive.
             </Paragraph>
-          </div>
-
-          <aside className="hidden lg:block">
-            <div className="sticky top-24 space-y-4">
-              <div className="rounded-lg border border-neutral-200 bg-neutral-50 p-4 dark:border-neutral-800 dark:bg-neutral-950">
-                <p className="inline-flex items-center gap-2 text-xs font-semibold tracking-wider text-neutral-500 uppercase">
-                  <Database className="size-4" />
-                  Field Notes
-                </p>
-                <p className="mt-3 text-sm leading-6 text-neutral-600 dark:text-neutral-400">
-                  Read this before adding another random index and hoping the
-                  query gets faster.
-                </p>
-              </div>
-
-              <div className="border-l border-neutral-200 pl-5 dark:border-neutral-800">
-                <p className="inline-flex items-center gap-2 text-xs font-semibold tracking-wider text-neutral-500 uppercase">
-                  <Tags className="size-4" />
-                  In this post
-                </p>
-                <div className="mt-4 space-y-3 text-sm text-neutral-500 dark:text-neutral-400">
-                <p>BSON, not JSON</p>
-                <p>WiredTiger storage</p>
-                <p>Indexes and scans</p>
-                <p>Aggregation costs</p>
-                <p>Schema tradeoffs</p>
-                </div>
-              </div>
-            </div>
-          </aside>
-        </article>
-      </main>
-
-      <Footer />
-    </div>
+    </BlogArticleLayout>
   );
 };
 

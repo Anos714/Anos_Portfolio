@@ -1,15 +1,74 @@
+import { useEffect, useState } from "react";
 import { FaGithub, FaLinkedin } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
-import { LuMail } from "react-icons/lu";
+import { LuMail, LuUsers } from "react-icons/lu";
 import { Link } from "react-router";
 
 const Footer = () => {
+  const trafficApiPath =
+    import.meta.env.VITE_TRAFFIC_API_PATH ?? "/api/traffic";
+  const [traffic, setTraffic] = useState<{
+    status: "loading" | "ready" | "unavailable";
+    count: number | null;
+  }>({
+    status: "loading",
+    count: null,
+  });
+
   const navLinks = [
     { label: "Home", href: "/" },
     { label: "Projects", href: "/projects" },
     { label: "Work", href: "/work" },
     { label: "Resume", href: "/resume" },
   ];
+
+  useEffect(() => {
+    let isMounted = true;
+
+    const loadTrafficCount = async () => {
+      try {
+        const response = await fetch(trafficApiPath, {
+          method: "POST",
+          cache: "no-store",
+        });
+
+        if (!response.ok) {
+          if (isMounted) {
+            setTraffic({ status: "unavailable", count: null });
+          }
+          return;
+        }
+
+        const data = (await response.json()) as {
+          configured?: boolean;
+          uniqueVisitors?: number | null;
+        };
+
+        if (
+          isMounted &&
+          data.configured &&
+          typeof data.uniqueVisitors === "number"
+        ) {
+          setTraffic({ status: "ready", count: data.uniqueVisitors });
+          return;
+        }
+
+        if (isMounted) {
+          setTraffic({ status: "unavailable", count: null });
+        }
+      } catch {
+        if (isMounted) {
+          setTraffic({ status: "unavailable", count: null });
+        }
+      }
+    };
+
+    loadTrafficCount();
+
+    return () => {
+      isMounted = false;
+    };
+  }, [trafficApiPath]);
 
   const socialLinks = [
     {
@@ -73,8 +132,21 @@ const Footer = () => {
         <div className="mt-8 border-t border-neutral-200 dark:border-neutral-800" />
 
         {/* BOTTOM */}
-        <div className="mt-6 text-sm text-neutral-600 dark:text-neutral-400">
-          © {new Date().getFullYear()} Rahul Sain. All rights reserved.
+        <div className="mt-6 flex flex-col gap-3 text-sm text-neutral-600 sm:flex-row sm:items-center sm:justify-between dark:text-neutral-400">
+          <span>
+            © {new Date().getFullYear()} Rahul Sain. All rights reserved.
+          </span>
+
+          <span className="inline-flex items-center gap-2">
+            <LuUsers className="size-4" />
+            {traffic.status === "ready" && traffic.count !== null
+              ? `${traffic.count.toLocaleString()} unique visitor${
+                  traffic.count === 1 ? "" : "s"
+                }`
+              : traffic.status === "loading"
+                ? "Visitors ..."
+                : "Visitors --"}
+          </span>
         </div>
       </div>
     </footer>
