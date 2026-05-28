@@ -1,21 +1,16 @@
 import { FaXTwitter } from "react-icons/fa6";
-import type { IconType } from "react-icons";
 import Navbar from "../components/navbar/Navbar";
 import { FaGithub, FaLinkedin } from "react-icons/fa";
 import {
   LuArrowUpRight,
   LuBriefcaseBusiness,
   LuCalendarDays,
-  LuExternalLink,
   LuFileText,
-  LuGithub,
   LuMail,
   LuSend,
 } from "react-icons/lu";
 import {
   SiBun,
-  SiDjango,
-  SiFastapi,
   SiMongodb,
   SiNextdotjs,
   SiNodedotjs,
@@ -30,6 +25,7 @@ import { Link } from "react-router";
 import { projects } from "../data/project";
 import { experience } from "../data/experience";
 import { GitHubCalendar } from "react-github-calendar";
+import ProjectCard from "../components/project/ProjectCard";
 
 const Home = () => {
   const heroIntroVariants: Variants = {
@@ -158,47 +154,6 @@ const Home = () => {
     { label: "Gemini API", icon: "gemini-color.svg" },
     { label: "Linux", icon: "Linux.svg" },
   ];
-
-  const projectHighlights: Record<string, string[]> = {
-    "DocuMind AI": [
-      "RAG architecture",
-      "Citation-aware answers",
-      "Multi-service backend",
-    ],
-    SmartBillr: ["AI invoice flow", "Business snapshots", "Freelancer-ready"],
-    Konnect: ["Realtime messaging", "Video calls", "Secure sessions"],
-    CodeVault: ["Monaco editor", "Snippet CRUD", "Developer UX"],
-  };
-
-  const techIconMap: Record<
-    string,
-    { src?: string; icon?: IconType; className?: string }
-  > = {
-    FastAPI: {
-      icon: SiFastapi,
-      className: "text-teal-600 dark:text-teal-300",
-    },
-    "Django REST Framework": {
-      icon: SiDjango,
-      className: "text-emerald-800 dark:text-emerald-300",
-    },
-    React: { src: "React.svg" },
-    PostgreSQL: { src: "postgresql.svg" },
-    pgvector: { src: "postgresql.svg" },
-    Redis: { src: "Redis.svg" },
-    "Gemini AI": { src: "gemini-color.svg" },
-    "Tailwind CSS": { src: "Tailwind CSS.svg" },
-    Cloudinary: { src: "JavaScript.svg" },
-    Neon: { src: "postgresql.svg" },
-    Upstash: { src: "Redis.svg" },
-    "Node.js": { src: "Node.js.svg" },
-    Express: { src: "Express.svg" },
-    MongoDB: { src: "MongoDB.svg" },
-    "Stream Chat SDK": { src: "socketio.svg" },
-    "Stream Video SDK": { src: "socketio.svg" },
-    "Redux Toolkit": { src: "Redux.svg" },
-    "Monaco Editor": { src: "TypeScript.svg" },
-  };
 
   return (
     <div className="min-h-screen w-full">
@@ -344,15 +299,18 @@ const Home = () => {
         <section className="mt-20 space-y-20">
           {/* PROJECTS */}
           <div>
-            <div className="mb-6 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+            <div className="mb-5 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
               <div>
-                <h2 className="text-sm font-semibold tracking-wider text-neutral-500 uppercase dark:text-neutral-400">
-                  Featured Builds
+                <p className="text-sm font-semibold tracking-wider text-neutral-500 uppercase dark:text-neutral-400">
+                  Featured
+                </p>
+                <h2 className="mt-1 text-3xl font-extrabold tracking-tight text-neutral-950 dark:text-neutral-100">
+                  Projects
                 </h2>
                 <p className="mt-2 max-w-2xl text-sm leading-6 text-neutral-600 dark:text-neutral-400">
-                  A quick recruiter scan of what I can ship: AI workflows,
-                  backend architecture, realtime features, and polished product
-                  interfaces.
+                  Selected builds with product thinking up front: AI workflows,
+                  realtime systems, backend depth, and interfaces that feel good
+                  to use.
                 </p>
               </div>
 
@@ -360,131 +318,14 @@ const Home = () => {
                 to="/projects"
                 className="inline-flex items-center gap-1.5 text-sm font-semibold text-neutral-800 transition hover:text-neutral-500 dark:text-neutral-200 dark:hover:text-neutral-400"
               >
-                More projects
+                Show all projects
                 <LuArrowUpRight className="size-4" />
               </Link>
             </div>
 
-            <div className="grid gap-4">
-              {projects.slice(0, 3).map((item, index) => (
-                <article
-                  key={item.title}
-                  className="group rounded-lg border border-neutral-200 bg-neutral-50 p-4 transition hover:border-neutral-300 hover:bg-white hover:shadow-lg hover:shadow-neutral-950/5 sm:p-5 dark:border-neutral-800 dark:bg-neutral-950 dark:hover:border-neutral-700 dark:hover:bg-neutral-900"
-                >
-                  <div className="grid gap-5 lg:grid-cols-[minmax(0,1fr)_220px]">
-                    <div className="min-w-0">
-                      <div className="flex items-start gap-4">
-                        <span className="flex size-10 shrink-0 items-center justify-center rounded-md border border-neutral-200 bg-white text-sm font-black text-neutral-400 transition group-hover:border-neutral-300 group-hover:text-neutral-950 dark:border-neutral-800 dark:bg-neutral-900 dark:text-neutral-500 dark:group-hover:border-neutral-700 dark:group-hover:text-neutral-100">
-                          0{index + 1}
-                        </span>
-
-                        <div className="min-w-0">
-                          <h3 className="text-2xl font-bold tracking-tight text-neutral-950 dark:text-neutral-100">
-                            {item.title}
-                          </h3>
-                          <p className="mt-2 max-w-2xl text-sm leading-6 text-neutral-600 dark:text-neutral-400">
-                            {item.subheading}
-                          </p>
-                        </div>
-                      </div>
-
-                      <div className="mt-5 grid gap-3 sm:grid-cols-3">
-                        {(
-                          projectHighlights[item.title] ??
-                          item.description.slice(0, 3)
-                        ).map((highlight) => (
-                          <div
-                            key={highlight}
-                            className="rounded-md border border-neutral-200 bg-white px-3 py-2 text-sm font-medium text-neutral-700 dark:border-neutral-800 dark:bg-neutral-900 dark:text-neutral-300"
-                          >
-                            {highlight}
-                          </div>
-                        ))}
-                      </div>
-
-                      <div className="mt-5 flex flex-wrap gap-2">
-                        {item.techStack.slice(0, 8).map((tech) => {
-                          const icon = techIconMap[tech];
-                          const Icon = icon?.icon;
-
-                          return (
-                            <span
-                              key={tech}
-                              className="inline-flex h-8 items-center gap-2 rounded-md border border-neutral-200 bg-white px-2.5 text-xs font-semibold text-neutral-700 dark:border-neutral-800 dark:bg-neutral-900 dark:text-neutral-300"
-                            >
-                              {Icon ? (
-                                <Icon
-                                  className={`size-4 ${icon.className ?? ""}`}
-                                />
-                              ) : icon?.src ? (
-                                <img src={icon.src} alt="" className="size-4" />
-                              ) : null}
-                              {tech}
-                            </span>
-                          );
-                        })}
-                      </div>
-                    </div>
-
-                    <div className="flex flex-col justify-between gap-4 rounded-md border border-neutral-200 bg-white p-3 dark:border-neutral-800 dark:bg-neutral-900">
-                      <div>
-                        <p className="text-xs font-semibold tracking-wider text-neutral-500 uppercase">
-                          Core Stack
-                        </p>
-                        <div className="mt-3 flex flex-wrap gap-2">
-                          {item.techStack.slice(0, 5).map((tech) => {
-                            const icon = techIconMap[tech];
-                            const Icon = icon?.icon;
-
-                            return Icon ? (
-                              <span
-                                key={tech}
-                                title={tech}
-                                className="flex size-9 items-center justify-center rounded-md border border-neutral-200 bg-neutral-50 dark:border-neutral-800 dark:bg-neutral-950"
-                              >
-                                <Icon
-                                  className={`size-5 ${icon.className ?? ""}`}
-                                />
-                              </span>
-                            ) : icon?.src ? (
-                              <img
-                                key={tech}
-                                src={icon.src}
-                                alt={tech}
-                                title={tech}
-                                className="size-9 rounded-md border border-neutral-200 bg-neutral-50 p-1.5 dark:border-neutral-800 dark:bg-neutral-950"
-                              />
-                            ) : null;
-                          })}
-                        </div>
-                      </div>
-
-                      <div className="flex flex-wrap gap-2 lg:flex-col">
-                        {item.liveLink !== "#" ? (
-                          <a
-                            href={item.liveLink}
-                            target="_blank"
-                            rel="noreferrer"
-                            className="inline-flex h-9 items-center justify-center gap-2 rounded-md border border-neutral-900 bg-neutral-900 px-3 text-sm font-medium text-white transition hover:bg-neutral-700 dark:border-neutral-100 dark:bg-neutral-100 dark:text-neutral-950 dark:hover:bg-neutral-300"
-                          >
-                            <LuExternalLink className="size-4" />
-                            Live
-                          </a>
-                        ) : null}
-
-                        <a
-                          href={item.githubLink}
-                          target="_blank"
-                          rel="noreferrer"
-                          className="inline-flex h-9 items-center justify-center gap-2 rounded-md border border-neutral-200 px-3 text-sm font-medium text-neutral-700 transition hover:border-neutral-400 hover:text-neutral-950 dark:border-neutral-800 dark:text-neutral-300 dark:hover:border-neutral-600 dark:hover:text-neutral-100"
-                        >
-                          <LuGithub className="size-4" />
-                          Code
-                        </a>
-                      </div>
-                    </div>
-                  </div>
-                </article>
+            <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+              {projects.slice(0, 2).map((item, index) => (
+                <ProjectCard key={item.title} project={item} index={index} />
               ))}
             </div>
           </div>

@@ -1,4 +1,18 @@
-export const projects = [
+import documindImage from "../assets/projects/documind.png";
+import konnectImage from "../assets/projects/konnect.png";
+import smartbillrImage from "../assets/projects/smartbillr.png";
+
+export type Project = {
+  title: string;
+  subheading: string;
+  techStack: string[];
+  description: string[];
+  liveLink: string;
+  githubLink: string;
+  image?: string;
+};
+
+export const projects: Project[] = [
   {
     title: "DocuMind AI",
     subheading:
@@ -25,6 +39,7 @@ export const projects = [
     ],
     liveLink: "https://documindai-omega.vercel.app/",
     githubLink: "https://github.com/Anos714/Assignment/tree/main",
+    image: documindImage,
   },
   {
     title: "SmartBillr",
@@ -46,6 +61,7 @@ export const projects = [
     ],
     liveLink: "#",
     githubLink: "https://github.com/Anos714/SmartBillr",
+    image: smartbillrImage,
   },
   {
     title: "Konnect",
@@ -69,6 +85,7 @@ export const projects = [
     ],
     liveLink: "https://konnect-zeta.vercel.app/",
     githubLink: "https://github.com/Anos714/Konnect",
+    image: konnectImage,
   },
   {
     title: "CodeVault",
