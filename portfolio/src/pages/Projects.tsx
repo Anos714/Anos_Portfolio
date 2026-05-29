@@ -4,10 +4,22 @@ import ProjectCard from "../components/project/ProjectCard";
 import { projects } from "../data/project";
 
 const Projects = () => {
-  const [openProject, setOpenProject] = useState<number | null>(0);
+  const [openProjects, setOpenProjects] = useState<Set<string>>(
+    () => (projects[0] ? new Set([projects[0].title]) : new Set()),
+  );
 
-  const toggleProject = (index: number) => {
-    setOpenProject((current) => (current === index ? null : index));
+  const toggleProject = (title: string) => {
+    setOpenProjects((current) => {
+      const next = new Set(current);
+
+      if (next.has(title)) {
+        next.delete(title);
+      } else {
+        next.add(title);
+      }
+
+      return next;
+    });
   };
 
   return (
@@ -36,14 +48,14 @@ const Projects = () => {
           </span>
         </div>
 
-        <div className="grid grid-cols-1 gap-4 pb-12 md:grid-cols-2">
+        <div className="grid grid-cols-1 items-start gap-4 pb-12 md:grid-cols-2">
           {projects.map((project, index) => (
             <ProjectCard
               key={project.title}
               project={project}
               index={index}
-              isOpen={openProject === index}
-              onToggle={() => toggleProject(index)}
+              isOpen={openProjects.has(project.title)}
+              onToggle={() => toggleProject(project.title)}
             />
           ))}
         </div>
