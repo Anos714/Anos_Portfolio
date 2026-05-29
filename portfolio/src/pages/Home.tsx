@@ -155,6 +155,13 @@ const Home = () => {
     { label: "Linux", icon: "Linux.svg" },
   ];
 
+  const aboutPoints = [
+    "I enjoy building full-stack products where the backend, data model, and UI all work together cleanly.",
+    "My recent projects focus on AI workflows, real-time communication, invoice systems, and developer tools.",
+    "I like turning rough product ideas into usable interfaces with reliable APIs behind them.",
+    "I am currently open to full-stack opportunities where I can keep learning, shipping, and solving practical problems.",
+  ];
+
   return (
     <div className="min-h-screen w-full">
       <Navbar />
@@ -412,6 +419,53 @@ const Home = () => {
                   </div>
                 </article>
               ))}
+            </div>
+          </div>
+
+          {/* ABOUT */}
+          <div>
+            <div className="mb-6 flex flex-col gap-3 border-b border-neutral-200 pb-5 sm:flex-row sm:items-end sm:justify-between dark:border-neutral-800">
+              <div>
+                <p className="text-sm font-semibold tracking-wider text-neutral-500 uppercase dark:text-neutral-400">
+                  About
+                </p>
+                <h2 className="mt-1 text-3xl font-extrabold tracking-tight text-neutral-950 dark:text-neutral-100">
+                  About Me
+                </h2>
+                <p className="mt-2 max-w-2xl text-sm leading-6 text-neutral-600 dark:text-neutral-400">
+                  A quick look at how I think, build, and approach full-stack
+                  product work.
+                </p>
+              </div>
+            </div>
+
+            <div className="grid gap-7 md:grid-cols-[220px_minmax(0,1fr)] md:items-center">
+              <img
+                src="/rahul_pfp.avif"
+                alt="Rahul Sain"
+                className="mx-auto aspect-square w-36 rounded-full border border-neutral-200 object-cover md:mx-0 md:w-56 dark:border-neutral-800"
+              />
+
+              <div>
+                <p className="max-w-3xl text-sm leading-6 text-neutral-600 dark:text-neutral-400">
+                  I am Rahul Sain, a full-stack developer working mainly with
+                  React, Node.js, Express, MongoDB, PostgreSQL, and modern
+                  frontend tooling. I care about clean architecture, useful
+                  product details, and making apps feel dependable after the
+                  first demo.
+                </p>
+
+                <div className="mt-5 grid gap-3 sm:grid-cols-2">
+                  {aboutPoints.map((point) => (
+                    <div key={point} className="flex gap-3 text-sm leading-6">
+                      <span className="mt-2.5 size-1.5 shrink-0 rounded-full bg-neutral-900 dark:bg-neutral-100" />
+                      <span className="text-neutral-700 dark:text-neutral-300">
+                        {point}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              </div>
             </div>
           </div>
         </section>
