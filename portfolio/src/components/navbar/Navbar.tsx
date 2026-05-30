@@ -18,10 +18,6 @@ const Navbar = () => {
   });
 
   const [scrolled, setScrolled] = useState(false);
-  const [themeAnimation, setThemeAnimation] = useState<{
-    id: number;
-    toDark: boolean;
-  } | null>(null);
 
   useEffect(() => {
     document.documentElement.classList.toggle("dark", darkMode);
@@ -29,11 +25,28 @@ const Navbar = () => {
   }, [darkMode]);
 
   const toggleTheme = () => {
-    setDarkMode((prev) => {
-      const nextTheme = !prev;
-      setThemeAnimation({ id: Date.now(), toDark: nextTheme });
-      return nextTheme;
-    });
+    const nextTheme = !darkMode;
+    const applyTheme = () => {
+      document.documentElement.classList.toggle("dark", nextTheme);
+      localStorage.setItem("theme", nextTheme ? "dark" : "light");
+      setDarkMode(nextTheme);
+    };
+
+    const prefersReducedMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    ).matches;
+    const transition = (
+      document as Document & {
+        startViewTransition?: (callback: () => void) => void;
+      }
+    ).startViewTransition;
+
+    if (!transition || prefersReducedMotion) {
+      applyTheme();
+      return;
+    }
+
+    transition.call(document, applyTheme);
   };
 
   useEffect(() => {
@@ -49,42 +62,6 @@ const Navbar = () => {
 
   return (
     <>
-      <AnimatePresence>
-        {themeAnimation ? (
-          <motion.div
-            key={themeAnimation.id}
-            className="pointer-events-none fixed inset-0 z-[100] overflow-hidden"
-            initial={{ opacity: 1 }}
-            animate={{ opacity: 0 }}
-            exit={{ opacity: 0 }}
-            transition={{
-              duration: 0.82,
-              ease: [0.22, 1, 0.36, 1],
-            }}
-            onAnimationComplete={() => setThemeAnimation(null)}
-          >
-            <motion.div
-              className={`absolute inset-x-0 top-0 h-full origin-top ${
-                themeAnimation.toDark ? "bg-neutral-950/85" : "bg-white/85"
-              } backdrop-blur-sm`}
-              initial={{ y: "-100%" }}
-              animate={{ y: "100%" }}
-              transition={{ duration: 0.82, ease: [0.16, 1, 0.3, 1] }}
-            />
-            <motion.div
-              className={`absolute inset-x-0 top-0 h-24 ${
-                themeAnimation.toDark
-                  ? "bg-gradient-to-b from-neutral-950 to-transparent"
-                  : "bg-gradient-to-b from-white to-transparent"
-              }`}
-              initial={{ y: "-100%", opacity: 0 }}
-              animate={{ y: "100vh", opacity: [0, 0.8, 0] }}
-              transition={{ duration: 0.92, ease: [0.16, 1, 0.3, 1] }}
-            />
-          </motion.div>
-        ) : null}
-      </AnimatePresence>
-
       <nav
         className={`sticky top-0 z-50 -mx-4 px-4 transition-all duration-300 ${
           scrolled

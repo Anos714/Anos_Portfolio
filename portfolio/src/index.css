@@ -2,6 +2,10 @@
 @import "tailwindcss";
 @custom-variant dark (&:where(.dark, .dark *));
 
+:root {
+  --expo-out: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
 html,
 body,
 #root {
@@ -15,4 +19,49 @@ body {
   font-family: "Hanken Grotesk", sans-serif;
   font-optical-sizing: auto;
   font-style: normal;
+}
+
+::view-transition-group(root) {
+  animation-duration: 0.7s;
+  animation-timing-function: var(--expo-out);
+}
+
+::view-transition-new(root) {
+  animation-name: reveal-light-top-down;
+}
+
+::view-transition-old(root),
+.dark::view-transition-old(root) {
+  animation: none;
+  z-index: -1;
+}
+
+.dark::view-transition-new(root) {
+  animation-name: reveal-dark-top-down;
+}
+
+@keyframes reveal-dark-top-down {
+  from {
+    clip-path: polygon(0% 0%, 100% 0%, 100% 0%, 0% 0%);
+  }
+  to {
+    clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
+  }
+}
+
+@keyframes reveal-light-top-down {
+  from {
+    clip-path: polygon(0% 0%, 100% 0%, 100% 0%, 0% 0%);
+  }
+  to {
+    clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(root),
+  ::view-transition-new(root),
+  ::view-transition-old(root) {
+    animation: none;
+  }
 }
