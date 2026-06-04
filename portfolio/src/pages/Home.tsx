@@ -181,7 +181,7 @@ const Home = () => {
                 Rahul Sain
               </h1>
               <p className="text-base tracking-tight text-neutral-700 dark:text-neutral-400">
-                Engineer · MERN · Open to Work
+                Full Stack Developer building SaaS & AI products
               </p>
             </div>
           </div>
