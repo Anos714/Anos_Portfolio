@@ -14,6 +14,32 @@ export type Project = {
 
 export const projects: Project[] = [
   {
+    title: "ThumbForge",
+    subheading:
+      "Working AI thumbnail generator for social media creators and teams.",
+    techStack: [
+      "Next.js",
+      "Node.js",
+      "Express",
+      "JWT",
+      "PostgreSQL",
+      "Neon",
+      "Redis",
+      "Upstash",
+      "Drizzle",
+      "Gemini AI",
+    ],
+    description: [
+      "Building an AI-powered thumbnail generator for creating social media-ready visuals from prompts",
+      "Using Gemini AI for image generation workflows and prompt improvement to help creators get stronger outputs",
+      "Implemented a Node.js and Express backend with JWT-based authentication for protected user sessions",
+      "Designed a PostgreSQL data layer on Neon with Drizzle ORM for typed schema and query management",
+      "Integrated Redis on Upstash for fast caching and workflow support across the generation experience",
+    ],
+    liveLink: "#",
+    githubLink: "https://github.com/Anos714/ThumbForge",
+  },
+  {
     title: "DocuMind AI",
     subheading:
       "Production-oriented AI-powered RAG knowledge base assistant with grounded citation responses.",

@@ -7,8 +7,11 @@ import {
 } from "react-icons/lu";
 import {
   SiDjango,
+  SiDrizzle,
   SiFastapi,
+  SiJsonwebtokens,
   SiMongodb,
+  SiNextdotjs,
   SiNodedotjs,
   SiPostgresql,
   SiReact,
@@ -34,6 +37,10 @@ const techIconMap: Record<string, TechIcon> = {
     className: "text-emerald-800 dark:text-emerald-300",
   },
   React: { icon: SiReact, className: "text-cyan-600 dark:text-cyan-300" },
+  "Next.js": {
+    icon: SiNextdotjs,
+    className: "text-neutral-950 dark:text-neutral-100",
+  },
   PostgreSQL: {
     icon: SiPostgresql,
     className: "text-sky-700 dark:text-sky-300",
@@ -59,6 +66,11 @@ const techIconMap: Record<string, TechIcon> = {
     className: "text-emerald-700 dark:text-emerald-300",
   },
   Express: { src: "Express.svg" },
+  JWT: { icon: SiJsonwebtokens, className: "text-pink-600 dark:text-pink-300" },
+  Drizzle: {
+    icon: SiDrizzle,
+    className: "text-lime-600 dark:text-lime-300",
+  },
   MongoDB: {
     icon: SiMongodb,
     className: "text-green-700 dark:text-green-300",
