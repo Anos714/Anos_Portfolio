@@ -25,6 +25,14 @@ app.get("/health", (_request, response) => {
   response.json({ ok: true });
 });
 
+app.get("/", (_request, response) => {
+  response.json({
+    ok: true,
+    service: "portfolio-traffic-backend",
+    endpoints: ["/health", "/api/visits"],
+  });
+});
+
 app.use("/api/visits", visitsRouter);
 
 app.use(

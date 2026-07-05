@@ -1,7 +1,16 @@
 import { Redis } from "@upstash/redis";
-import { env } from "../config/env";
+import { getRuntimeEnv } from "../config/env";
 
-export const redis = new Redis({
-  url: env.redisUrl,
-  token: env.redisToken,
-});
+let redisInstance: Redis | null = null;
+
+export const getRedis = () => {
+  if (!redisInstance) {
+    const env = getRuntimeEnv();
+    redisInstance = new Redis({
+      url: env.redisUrl,
+      token: env.redisToken,
+    });
+  }
+
+  return redisInstance;
+};

@@ -1,7 +1,7 @@
 import { and, count, eq, gte, sql } from "drizzle-orm";
-import { db } from "../db/client";
+import { getDb } from "../db/client";
 import { visits } from "../db/schema";
-import { redis } from "./redis";
+import { getRedis } from "./redis";
 import { createHashValue } from "../utils/hash";
 
 type RecordVisitInput = {
@@ -21,6 +21,8 @@ const getTodayStart = () => {
 };
 
 export const recordVisit = async ({ ip, userAgent, path, referrer }: RecordVisitInput) => {
+  const db = getDb();
+  const redis = getRedis();
   const visitorId = createHashValue(`visitor:${ip}:${userAgent}`);
   const ipHash = createHashValue(`ip:${ip}`);
   const dailyKey = `portfolio:visitor:${visitorId}:${getUtcDateKey()}`;
