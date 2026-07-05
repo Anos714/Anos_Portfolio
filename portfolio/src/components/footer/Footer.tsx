@@ -5,8 +5,7 @@ import { LuMail, LuUsers } from "react-icons/lu";
 import { Link } from "react-router";
 
 const Footer = () => {
-  const trafficApiPath =
-    import.meta.env.VITE_TRAFFIC_API_PATH ?? "/api/traffic";
+  const visitsApiUrl = import.meta.env.VITE_VISITS_API_URL ?? "/api/visits";
   const [traffic, setTraffic] = useState<{
     status: "loading" | "ready" | "unavailable";
     count: number | null;
@@ -27,21 +26,16 @@ const Footer = () => {
 
     const loadTrafficCount = async () => {
       try {
-        const storageKey = "rahul-portfolio-visitor-id";
-        const existingVisitorId = localStorage.getItem(storageKey);
-        const visitorId = existingVisitorId ?? crypto.randomUUID();
-
-        if (!existingVisitorId) {
-          localStorage.setItem(storageKey, visitorId);
-        }
-
-        const response = await fetch(trafficApiPath, {
+        const response = await fetch(visitsApiUrl, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
           cache: "no-store",
-          body: JSON.stringify({ visitorId }),
+          body: JSON.stringify({
+            path: window.location.pathname,
+            referrer: document.referrer,
+          }),
         });
 
         if (!response.ok) {
@@ -52,15 +46,10 @@ const Footer = () => {
         }
 
         const data = (await response.json()) as {
-          configured?: boolean;
           uniqueVisitors?: number | null;
         };
 
-        if (
-          isMounted &&
-          data.configured &&
-          typeof data.uniqueVisitors === "number"
-        ) {
+        if (isMounted && typeof data.uniqueVisitors === "number") {
           setTraffic({ status: "ready", count: data.uniqueVisitors });
           return;
         }
@@ -80,7 +69,7 @@ const Footer = () => {
     return () => {
       isMounted = false;
     };
-  }, [trafficApiPath]);
+  }, [visitsApiUrl]);
 
   const socialLinks = [
     {

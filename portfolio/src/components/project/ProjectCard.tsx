@@ -96,16 +96,33 @@ const ProjectCard = ({ project, index, isOpen, onToggle }: ProjectCardProps) => 
     .replace(/[^a-z0-9]/gi, "")
     .slice(0, 8)
     .toUpperCase();
+  const status = project.status ?? "operational";
+  const statusConfig = {
+    operational: {
+      label: "Operational",
+      pulseClassName: "bg-emerald-500",
+      dotClassName: "bg-emerald-500 dark:bg-emerald-400",
+    },
+    working: {
+      label: "Working",
+      pulseClassName: "bg-red-500",
+      dotClassName: "bg-red-500 dark:bg-red-400",
+    },
+  }[status];
 
   return (
     <article className="group relative isolate flex min-h-[430px] flex-col overflow-hidden rounded-lg border border-neutral-200 bg-white transition duration-300 hover:-translate-y-1 hover:border-neutral-300 hover:shadow-xl hover:shadow-neutral-950/10 dark:border-neutral-800 dark:bg-neutral-950 dark:hover:border-neutral-700">
       <header className="flex items-center justify-between gap-3 border-b border-neutral-200/80 px-3 py-2 dark:border-neutral-800/80">
         <div className="flex min-w-0 items-center gap-1.5 font-mono text-[9px] uppercase tracking-[0.14em] text-neutral-500">
           <span className="relative flex size-1.5 shrink-0">
-            <span className="absolute inline-flex size-full animate-ping rounded-full bg-emerald-500 opacity-70" />
-            <span className="relative inline-flex size-1.5 rounded-full bg-emerald-500 dark:bg-emerald-400" />
+            <span
+              className={`absolute inline-flex size-full animate-ping rounded-full opacity-70 ${statusConfig.pulseClassName}`}
+            />
+            <span
+              className={`relative inline-flex size-1.5 rounded-full ${statusConfig.dotClassName}`}
+            />
           </span>
-          <span>Operational</span>
+          <span>{statusConfig.label}</span>
           <span className="text-neutral-300 dark:text-neutral-700">/</span>
           <span className="truncate text-neutral-400 dark:text-neutral-600">
             Case-{caseCode}

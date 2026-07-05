@@ -26,8 +26,11 @@ import { projects } from "../data/project";
 import { experience } from "../data/experience";
 import { GitHubCalendar } from "react-github-calendar";
 import ProjectCard from "../components/project/ProjectCard";
+import { useState } from "react";
 
 const Home = () => {
+  const [isAltPfp, setIsAltPfp] = useState(false);
+
   const heroIntroVariants: Variants = {
     hidden: { opacity: 0, y: 10 },
     visible: {
@@ -170,11 +173,43 @@ const Home = () => {
         {/* HERO */}
         <section className="flex flex-col gap-7">
           <div className="flex items-center gap-4">
-            <img
-              className="size-24 rounded-full object-cover"
-              src="/rahul_pfp.avif"
-              alt="Rahul Sain"
-            />
+            <motion.button
+              type="button"
+              className="group relative size-24 shrink-0 rounded-full outline-none focus-visible:ring-2 focus-visible:ring-neutral-900 focus-visible:ring-offset-4 focus-visible:ring-offset-white dark:focus-visible:ring-neutral-100 dark:focus-visible:ring-offset-neutral-900"
+              aria-label="Change profile picture"
+              onClick={() => setIsAltPfp((current) => !current)}
+              whileHover={{ y: -4, rotate: -2, scale: 1.04 }}
+              whileTap={{ scale: 0.88, rotate: 4 }}
+              transition={{ type: "spring", stiffness: 520, damping: 22 }}
+            >
+              <motion.span
+                className="pointer-events-none absolute -right-7 -top-7 z-10 rounded-full border border-neutral-200 bg-white px-2.5 py-1 text-xs font-semibold tracking-tight text-neutral-800 opacity-0 shadow-lg shadow-neutral-900/10 transition-opacity duration-200 group-hover:opacity-100 group-focus-visible:opacity-100 dark:border-neutral-700 dark:bg-neutral-800 dark:text-neutral-100 dark:shadow-black/30"
+                animate={{ y: [0, -4, 0], rotate: [-3, 2, -3] }}
+                transition={{ duration: 2.2, repeat: Infinity, ease: "easeInOut" }}
+              >
+                psst, click me!
+              </motion.span>
+
+              <motion.span
+                className="absolute inset-0 rounded-full bg-neutral-900/10 blur-xl dark:bg-white/10"
+                animate={
+                  isAltPfp
+                    ? { scale: [1, 1.35, 1.08], opacity: [0.35, 0, 0.2] }
+                    : { scale: 1, opacity: 0.18 }
+                }
+                transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+              />
+
+              <motion.img
+                key={isAltPfp ? "anime-pfp" : "rahul-pfp"}
+                className="relative size-24 rounded-full border border-neutral-200 object-cover shadow-[0_8px_0_0_rgba(0,0,0,0.12)] transition-shadow duration-300 group-hover:shadow-[0_5px_0_0_rgba(0,0,0,0.18)] dark:border-neutral-700 dark:shadow-[0_8px_0_0_rgba(0,0,0,0.35)] dark:group-hover:shadow-[0_5px_0_0_rgba(0,0,0,0.45)]"
+                src={isAltPfp ? "/pfp-click.jpeg" : "/rahul_pfp.avif"}
+                alt="Rahul Sain"
+                initial={{ opacity: 0, scale: 0.72, rotate: -12 }}
+                animate={{ opacity: 1, scale: 1, rotate: 0 }}
+                transition={{ type: "spring", stiffness: 420, damping: 24 }}
+              />
+            </motion.button>
 
             <div>
               <h1 className="text-3xl font-extrabold tracking-tight text-neutral-900 dark:text-neutral-100">

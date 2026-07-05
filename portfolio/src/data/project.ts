@@ -10,6 +10,7 @@ export type Project = {
   liveLink: string;
   githubLink: string;
   image?: string;
+  status?: "operational" | "working";
 };
 
 export const projects: Project[] = [
@@ -38,6 +39,7 @@ export const projects: Project[] = [
     ],
     liveLink: "#",
     githubLink: "https://github.com/Anos714/ThumbForge",
+    status: "working",
   },
   {
     title: "DocuMind AI",
@@ -88,6 +90,7 @@ export const projects: Project[] = [
     liveLink: "#",
     githubLink: "https://github.com/Anos714/SmartBillr",
     image: smartbillrImage,
+    status: "working",
   },
   {
     title: "Konnect",
