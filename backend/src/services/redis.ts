@@ -1,5 +1,5 @@
 import { Redis } from "@upstash/redis";
-import { getRuntimeEnv } from "../config/env";
+import { getRuntimeEnv } from "../config/env.js";
 
 let redisInstance: Redis | null = null;
 

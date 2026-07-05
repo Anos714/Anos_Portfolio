@@ -1,8 +1,8 @@
 import { and, count, eq, gte, sql } from "drizzle-orm";
-import { getDb } from "../db/client";
-import { visits } from "../db/schema";
-import { getRedis } from "./redis";
-import { createHashValue } from "../utils/hash";
+import { getDb } from "../db/client.js";
+import { visits } from "../db/schema.js";
+import { getRedis } from "./redis.js";
+import { createHashValue } from "../utils/hash.js";
 
 type RecordVisitInput = {
   ip: string;

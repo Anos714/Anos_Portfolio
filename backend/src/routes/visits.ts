@@ -1,6 +1,6 @@
 import { Router } from "express";
-import { recordVisit } from "../services/visitService";
-import { getClientIp, getUserAgent } from "../utils/request";
+import { recordVisit } from "../services/visitService.js";
+import { getClientIp, getUserAgent } from "../utils/request.js";
 
 type VisitBody = {
   path?: unknown;
