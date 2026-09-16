@@ -1,0 +1,78 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+:root {
+  --background: #ffffff;
+  --foreground: #0a0a0a;
+}
+
+.dark {
+  --background: #0a0a0a;
+  --foreground: #ededed;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-primary: var(--foreground);
+  --font-sans: var(--font-inter);
+  --font-display: var(--font-schibsted);
+  --font-mono: var(--font-mono);
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 5rem;
+  color-scheme: light;
+}
+
+html.dark {
+  color-scheme: dark;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-inter), sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background: var(--foreground);
+  color: var(--background);
+}
+
+@property --mask-from {
+  syntax: "<percentage>";
+  inherits: false;
+  initial-value: 0%;
+}
+
+.dotted-underline {
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent 0,
+    transparent var(--mask-from, 0%),
+    #000 var(--mask-from, 0%),
+    #000 100%
+  );
+  mask-image: linear-gradient(
+    to right,
+    transparent 0,
+    transparent var(--mask-from, 0%),
+    #000 var(--mask-from, 0%),
+    #000 100%
+  );
+  transition: --mask-from 0.4s ease;
+}
+
+.group:hover .dotted-underline {
+  --mask-from: 0%;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
