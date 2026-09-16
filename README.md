@@ -4,7 +4,7 @@ A minimal, modern developer portfolio built with Next.js 16, React 19, and Tailw
 Features dedicated pages for projects, work, blogs, inspiration, and resume, live unique-visitor
 tracking backed by Neon Postgres, full SEO, and a polished light/dark theme.
 
-[**Live Demo**](https://portfolio-anos714.vercel.app) · [**Source**](https://github.com/Anos714/Anos_Portfolio)
+[**Live Demo**](https://rahulxcode.vercel.app/) · [**Source**](https://github.com/Anos714/Anos_Portfolio)
 
 ---
 
@@ -282,7 +282,7 @@ Feel free to look at the code and learn from it, but please don't copy it verbat
 
 **Rahul Sain** — Full Stack Developer
 
-- Website: [portfolio](https://portfolio-anos714.vercel.app)
+- Website: [portfolio](https://rahulxcode.vercel.app/)
 - GitHub: [@Anos714](https://github.com/Anos714)
 - X/Twitter: [@RahulSain714](https://x.com/RahulSain714)
 - LinkedIn: [rahulxcode](https://www.linkedin.com/in/rahulxcode/)
