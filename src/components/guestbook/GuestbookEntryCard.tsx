@@ -74,7 +74,13 @@ export function GuestbookEntryCard({
               <path d="M20 6L9 17l-5-5" />
             </svg>
           </span>
-          <span className="text-xs text-foreground/40">
+          <span
+            className="text-xs text-foreground/40"
+            // Relative time is computed from Date.now(), so the server and
+            // client naturally differ by a second or two. Keep the server
+            // value instead of erroring — a ±1 unit drift is harmless here.
+            suppressHydrationWarning
+          >
             {formatRelativeTime(entry.createdAt)}
           </span>
         </div>
