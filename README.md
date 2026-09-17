@@ -19,6 +19,9 @@ tracking backed by Neon Postgres, full SEO, and a polished light/dark theme.
   web manifest, canonical URLs, and JSON-LD structured data
 - **Typing-effect hero** — the "aka …" title cycles through roles with a typewriter animation
 - **Link previews** — hover cards with live screenshots (via Microlink) on social links
+- **Guestbook** — visitors sign in with Google (Better Auth) to leave a monochrome star rating and
+  optional comment. One entry per visitor, rate-limited, with moderation via a `hidden` flag and
+  paginated display. The home page shows the latest three entries plus an average-rating badge.
 - **Motion** — subtle reveal, stagger, and hover animations throughout (Framer Motion)
 
 ---
