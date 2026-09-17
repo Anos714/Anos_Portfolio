@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { IconBadge } from "../IconBadge";
 import { TechIcon } from "../TechIcon";
 import type { Project } from "@/data/projects";
@@ -6,11 +7,13 @@ export function ProjectCard({ project }: { project: Project }) {
   return (
     <article className="group flex h-full flex-col gap-3 overflow-hidden rounded-2xl bg-neutral-50/50 shadow-sm shadow-neutral-900/[0.03] ring-1 ring-neutral-200/70 transition-all duration-300 hover:-translate-y-1 hover:bg-neutral-50 hover:shadow-md hover:shadow-neutral-900/[0.06] hover:ring-neutral-300/80 dark:bg-neutral-900/50 dark:shadow-neutral-950/30 dark:ring-neutral-800/70 dark:hover:bg-neutral-900 dark:hover:shadow-neutral-950/50 dark:hover:ring-neutral-700/80">
       {project.image && (
-        <div className="overflow-hidden">
-          <img
+        <div className="relative aspect-[4/3] overflow-hidden">
+          <Image
             src={project.image}
             alt={`${project.title} preview`}
-            className="aspect-[4/3] w-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.04]"
+            fill
+            sizes="(max-width: 768px) 100vw, 50vw"
+            className="object-cover transition-transform duration-500 ease-out group-hover:scale-[1.04]"
           />
         </div>
       )}
@@ -18,9 +21,11 @@ export function ProjectCard({ project }: { project: Project }) {
         <div className="flex items-center gap-2">
           <div className="transition-transform duration-300 group-hover:-rotate-6 group-hover:scale-110">
             {project.logo ? (
-              <img
+              <Image
                 src={project.logo}
                 alt={`${project.title} logo`}
+                width={32}
+                height={32}
                 className="aspect-square size-8 rounded-md object-contain ring-1 ring-neutral-200/70 dark:ring-neutral-800/70"
               />
             ) : (
@@ -52,15 +57,23 @@ export function ProjectCard({ project }: { project: Project }) {
         </div>
 
         <div className="mt-auto flex items-center gap-4 pt-2 text-sm">
-          <a
-            href={project.live}
-            className="group/link inline-flex items-center gap-1 font-medium text-foreground/70 transition-colors hover:text-primary"
-          >
-            Live
-            <span className="transition-transform duration-200 group-hover/link:translate-x-0.5">
-              ↗
+          {project.live ? (
+            <a
+              href={project.live}
+              className="group/link inline-flex items-center gap-1.5 font-medium text-foreground/70 transition-colors hover:text-primary"
+            >
+              <span className="size-1.5 animate-pulse rounded-full bg-green-500 shadow-[0_0_8px_2px_rgba(34,197,94,0.7)]" />
+              Live
+              <span className="transition-transform duration-200 group-hover/link:translate-x-0.5">
+                ↗
+              </span>
+            </a>
+          ) : (
+            <span className="inline-flex items-center gap-1.5 font-medium text-foreground/70">
+              <span className="size-1.5 animate-pulse rounded-full bg-orange-500 shadow-[0_0_8px_2px_rgba(249,115,22,0.7)]" />
+              Building
             </span>
-          </a>
+          )}
           <span className="size-1 rounded-full bg-neutral-200 dark:bg-neutral-700" />
           <a
             href={project.github}
