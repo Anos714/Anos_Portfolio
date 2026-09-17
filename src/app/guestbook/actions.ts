@@ -1,7 +1,7 @@
 "use server";
 
 import { and, eq, sql } from "drizzle-orm";
-import { revalidatePath } from "next/cache";
+import { updateTag } from "next/cache";
 import { headers } from "next/headers";
 import { auth } from "@/lib/auth";
 import { db } from "@/db";
@@ -96,8 +96,10 @@ export async function postEntry(
     };
   }
 
-  revalidatePath("/guestbook");
-  revalidatePath("/");
+  // Refresh only guestbook-tagged reads so the new entry is visible right away
+  // (read-your-own-writes). revalidatePath("/") would also purge the external
+  // blog fetch, blocking this response until that slow request finishes.
+  updateTag("guestbook");
 
   return { success: true, rating, comment };
 }
@@ -121,14 +123,12 @@ export async function deleteEntry(
       and(eq(guestbook.id, id), eq(guestbook.userId, session.user.id)),
     );
 
-  revalidatePath("/guestbook");
-  revalidatePath("/");
+  updateTag("guestbook");
 
   return { success: true };
 }
 
 export async function signOutAction() {
   await auth.api.signOut({ headers: await headers() });
-  revalidatePath("/guestbook");
-  revalidatePath("/");
+  updateTag("guestbook");
 }
