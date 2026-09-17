@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter, Schibsted_Grotesk, JetBrains_Mono } from "next/font/google";
 import { site } from "@/data/site";
 import { siteUrl } from "@/lib/site";
+import { InlineScript } from "@/components/InlineScript";
 import "./globals.css";
 
 const inter = Inter({
@@ -110,10 +111,8 @@ export default function RootLayout({
       className={`${inter.variable} ${schibsted.variable} ${jetbrainsMono.variable} h-full antialiased`}
     >
       <head>
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `try{var t=localStorage.getItem("theme");var m=window.matchMedia("(prefers-color-scheme: dark)").matches;if(t==="dark"||(!t&&m)){document.documentElement.classList.add("dark")}}catch(e){}`,
-          }}
+        <InlineScript
+          html={`try{var t=localStorage.getItem("theme");var m=window.matchMedia("(prefers-color-scheme: dark)").matches;if(t==="dark"||(!t&&m)){document.documentElement.classList.add("dark")}}catch(e){}`}
         />
       </head>
       <body className="font-sans flex min-h-screen flex-col bg-background text-foreground">
