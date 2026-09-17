@@ -6,6 +6,7 @@ import { WorkSection } from "@/components/sections/WorkSection";
 import { BlogsSection } from "@/components/sections/BlogsSection";
 import { ResumeSection } from "@/components/sections/ResumeSection";
 import { CallToActionSection } from "@/components/sections/CallToActionSection";
+import { GuestbookSection } from "@/components/sections/GuestbookSection";
 import { Footer } from "@/components/Footer";
 import { PersonJsonLd } from "@/components/PersonJsonLd";
 
@@ -48,6 +49,12 @@ export default function Home() {
           </div>
 
           <CallToActionSection />
+
+          <div className="my-10 w-full shrink-0">
+            <DottedDivider />
+          </div>
+
+          <GuestbookSection />
         </div>
       </main>
 

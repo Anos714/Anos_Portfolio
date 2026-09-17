@@ -66,6 +66,7 @@ export const navLinks = [
   { label: "Projects", href: "/projects" },
   { label: "Work", href: "/work" },
   { label: "Blogs", href: "/blogs" },
+  { label: "Guestbook", href: "/guestbook" },
   { label: "Inspiration", href: "/inspiration" },
   { label: "Resume", href: "/resume" },
 ];
