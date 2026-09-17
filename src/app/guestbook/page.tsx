@@ -12,6 +12,7 @@ import { StarRating } from "@/components/guestbook/StarRating";
 import { auth } from "@/lib/auth";
 import {
   getGuestbookEntries,
+  getGuestbookEntryByUser,
   getGuestbookStats,
 } from "@/data/guestbook";
 
@@ -44,6 +45,12 @@ export default async function GuestbookPage({
       }
     : null;
 
+  // So a returning visitor sees their existing rating/comment and an
+  // "Update your rating" button — not a blank 0-star "post" form.
+  const existingEntry = session?.user
+    ? await getGuestbookEntryByUser(session.user.id)
+    : null;
+
   return (
     <>
       <Navbar />
@@ -74,7 +81,11 @@ export default async function GuestbookPage({
 
           <Reveal delay={0.1}>
             <div className="mt-6">
-              <GuestbookForm user={user} />
+              <GuestbookForm
+                user={user}
+                existingEntry={existingEntry}
+                callbackURL="/guestbook"
+              />
             </div>
           </Reveal>
 
