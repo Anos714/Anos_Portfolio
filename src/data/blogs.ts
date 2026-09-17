@@ -10,7 +10,7 @@ type ApiBlog = {
   createdAt?: string;
 };
 
-const BLOG_BASE_URL = "https://inkwell-0tx.pages.dev/blogs";
+const BLOG_BASE_URL = "https://inkwell-blogs.pages.dev/blogs";
 
 export function blogUrl(slug: string) {
   return `${BLOG_BASE_URL}/${slug}`;
@@ -27,7 +27,9 @@ export async function fetchBlogs(): Promise<Blog[]> {
     return data.map((b) => ({
       title: b.title,
       slug: b.slug ?? "",
-      date: b.createdAt ? new Date(b.createdAt).getUTCFullYear().toString() : "",
+      date: b.createdAt
+        ? new Date(b.createdAt).getUTCFullYear().toString()
+        : "",
     }));
   } catch {
     return [];
