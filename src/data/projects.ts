@@ -5,7 +5,7 @@ export type Project = {
   year: string;
   tech: string[];
   description: string[];
-  live: string;
+  live?: string;
   github: string;
   image?: string;
   logo?: string;
@@ -80,6 +80,50 @@ export const projects: Project[] = [
     ],
     live: "https://konnect-zeta.vercel.app/",
     github: "https://github.com/Anos714/Konnect",
+  },
+  {
+    title: "ThePerfectResume",
+    year: "2026",
+    tech: [
+      "Hono",
+      "Bun",
+      "Drizzle ORM",
+      "Neon",
+      "Redis",
+      "Zod",
+      "OAuth",
+    ],
+    image: "/projects/theperfectresume.png",
+    description: [
+      "Built a resume and CV builder that pairs full manual editing control with AI-assisted content generation, letting users craft polished, role-targeted resumes from scratch or from an existing profile.",
+      "Designed a modular Hono backend on the Bun runtime, splitting domain logic into users, profiles, and resumes modules with route-level Zod request validation.",
+      "Modeled relational schemas with Drizzle ORM on Neon serverless PostgreSQL and added a Redis caching layer with rate limiting to protect auth and generation endpoints from abuse.",
+      "Implemented secure Google OAuth authentication and transactional email via Nodemailer, with end-to-end typed APIs for a fully type-safe developer experience.",
+    ],
+    github: "https://github.com/Anos714/ThePerfectResume",
+  },
+  {
+    title: "SmartBillr",
+    year: "2026",
+    tech: [
+      "React",
+      "Node.js",
+      "Express.js",
+      "MongoDB",
+      "Redis",
+      "TanStack Query",
+      "Zustand",
+      "Zod",
+      "JWT",
+    ],
+    image: "/projects/smartbillr.png",
+    description: [
+      "Built a modern invoice generation platform that combines full manual invoice control with AI-assisted automation, covering dynamic invoice fields, clients, items, and taxes in a clean export-ready UI.",
+      "Engineered a Node.js + Express backend with JWT and Google OAuth authentication, secure cookie-based sessions, Zod input validation, and hardening via Helmet, CORS, and Morgan logging.",
+      "Persisted invoices and clients in MongoDB with Mongoose, layered Redis for caching and performance, and integrated Nodemailer for invoice delivery and notifications.",
+      "Crafted a fast Vite + React 19 frontend with TanStack Query for server state, Zustand for global state, and toast-driven feedback for a snappy invoicing workflow.",
+    ],
+    github: "https://github.com/Anos714/SmartBillr",
   },
 ];
 
