@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import { cn } from "@/lib/utils";
 
 const DEFAULT_WORDS = [
   "Software Developer",
@@ -43,10 +44,20 @@ export function Typewriter({
     return () => clearTimeout(timeout);
   }, [text, deleting, index, words]);
 
+  const longest = React.useMemo(
+    () => words.reduce((a, b) => (b.length > a.length ? b : a), ""),
+    [words],
+  );
+
   return (
-    <span className={className}>
-      {text}
-      <span className="animate-pulse">|</span>
+    <span className="relative inline-block align-bottom">
+      <span className="invisible whitespace-pre" aria-hidden="true">
+        {longest}
+      </span>
+      <span className={cn("absolute inset-0 whitespace-pre", className)}>
+        {text}
+        <span className="animate-pulse">|</span>
+      </span>
     </span>
   );
 }
