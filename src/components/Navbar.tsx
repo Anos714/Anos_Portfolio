@@ -28,14 +28,16 @@ export function Navbar() {
       </div>
 
       <div className="flex items-center gap-2 pr-10">
-        <motion.img
-          src="/logo.jpeg"
-          alt={`${site.name} logo`}
-          className="aspect-square size-8 rounded-md object-cover shadow-md"
-          whileHover={{ scale: 1.1, rotate: -4 }}
-          whileTap={{ scale: 0.9 }}
-          transition={{ type: "spring", stiffness: 400, damping: 15 }}
-        />
+        <Link href="/" aria-label="Go to home page" className="rounded-md">
+          <motion.img
+            src="/logo.jpeg"
+            alt={`${site.name} logo`}
+            className="aspect-square size-8 rounded-md object-cover shadow-md"
+            whileHover={{ scale: 1.1, rotate: -4 }}
+            whileTap={{ scale: 0.9 }}
+            transition={{ type: "spring", stiffness: 400, damping: 15 }}
+          />
+        </Link>
         <h1 className="text-xl font-medium tracking-tight text-foreground md:text-2xl">
           {site.name}
           <span className="font-normal text-foreground/50"> aka </span>
