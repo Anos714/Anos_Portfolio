@@ -79,7 +79,7 @@ export function ThemeToggle() {
         "inset:0",
         "z-index:9999",
         "pointer-events:none",
-        `background:${next ? "#0a0a0a" : "#ffffff"}`,
+        `background:${next ? "#171717" : "#ffffff"}`,
         `clip-path:circle(0px at ${x}px ${y}px)`,
         "-webkit-clip-path:circle(0px at ${x}px ${y}px)",
       ].join(";");
