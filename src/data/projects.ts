@@ -56,7 +56,7 @@ export const projects: Project[] = [
       "Engineered an interactive split-pane Markdown editor with real-time live preview, draft auto-saving, and syntax highlighting using Zustand and local storage fallback.",
       "Integrated TanStack Query for optimistic UI updates and cache invalidation, paired with an Upstash Redis caching layer and Drizzle ORM on PostgreSQL for instant article reads.",
     ],
-    live: "https://inkwell-0tx.pages.dev/",
+    live: "https://inkwell-blogs.pages.dev",
     github: "https://github.com/Anos714/Inkwell",
   },
   {
