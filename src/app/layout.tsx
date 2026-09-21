@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter, Schibsted_Grotesk, JetBrains_Mono } from "next/font/google";
+import { Inter, Schibsted_Grotesk, JetBrains_Mono, Instrument_Serif } from "next/font/google";
 import { site } from "@/data/site";
 import { siteUrl } from "@/lib/site";
 import { InlineScript } from "@/components/InlineScript";
@@ -18,6 +18,14 @@ const schibsted = Schibsted_Grotesk({
 const jetbrainsMono = JetBrains_Mono({
   variable: "--font-mono",
   subsets: ["latin"],
+});
+
+const instrumentSerif = Instrument_Serif({
+  variable: "--font-serif",
+  weight: "400",
+  style: ["normal", "italic"],
+  subsets: ["latin"],
+  display: "swap",
 });
 
 const keywords = [
@@ -108,7 +116,7 @@ export default function RootLayout({
     <html
       lang="en"
       suppressHydrationWarning
-      className={`${inter.variable} ${schibsted.variable} ${jetbrainsMono.variable} h-full antialiased`}
+      className={`${inter.variable} ${schibsted.variable} ${jetbrainsMono.variable} ${instrumentSerif.variable} h-full antialiased`}
     >
       <head>
         <InlineScript
