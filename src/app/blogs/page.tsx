@@ -2,7 +2,7 @@ import { Navbar } from "@/components/Navbar";
 import { DottedDivider } from "@/components/DottedDivider";
 import { SectionHeading } from "@/components/SectionHeading";
 import { Reveal } from "@/components/Reveal";
-import { BlogsList } from "@/components/blog/BlogsList";
+import { BlogSearch } from "@/components/blog/BlogSearch";
 import { fetchBlogs } from "@/data/blogs";
 import { DottedLink } from "@/components/DottedLink";
 import { Footer } from "@/components/Footer";
@@ -30,7 +30,7 @@ export default async function BlogsPage() {
           </div>
 
           <div className="mt-6">
-            <BlogsList posts={posts} />
+            <BlogSearch posts={posts} />
           </div>
 
           <div className="my-10 w-full shrink-0">
