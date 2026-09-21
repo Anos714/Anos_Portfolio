@@ -18,7 +18,7 @@ export function blogUrl(slug: string) {
 
 export async function fetchBlogs(): Promise<Blog[]> {
   try {
-    const res = await fetch("https://inkwell-x9r7.onrender.com/api/v1/blogs", {
+    const res = await fetch("https://inkwell-rca7.onrender.com/api/v1/blogs", {
       next: { revalidate: 3600 },
     });
     if (!res.ok) return [];
