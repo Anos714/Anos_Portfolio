@@ -22,7 +22,7 @@ export default function OGImage() {
           display: "flex",
           flexDirection: "column",
           justifyContent: "space-between",
-          background: "#0a0a0a",
+          background: "#171717",
           padding: 72,
           fontFamily: "sans-serif",
         }}
@@ -39,14 +39,29 @@ export default function OGImage() {
             style={{
               display: "flex",
               flexDirection: "column",
-              color: "#fafafa",
+              color: "#ededed",
             }}
           >
-            <div style={{ fontSize: 44, fontWeight: 600, letterSpacing: -0.5 }}>
+            <div
+              style={{
+                display: "flex",
+                fontSize: 44,
+                fontWeight: 600,
+                letterSpacing: -0.5,
+              }}
+            >
               {site.name}
             </div>
-            <div style={{ fontSize: 26, color: "#a3a3a3", marginTop: 4 }}>
-              {site.title}
+            <div
+              style={{
+                display: "flex",
+                fontSize: 26,
+                fontStyle: "italic",
+                color: "#a3a3a3",
+                marginTop: 4,
+              }}
+            >
+              aka {site.aka}
             </div>
           </div>
         </div>
@@ -54,18 +69,26 @@ export default function OGImage() {
         <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
           <div
             style={{
+              display: "flex",
               fontSize: 60,
               fontWeight: 700,
-              color: "#fafafa",
+              color: "#ededed",
               letterSpacing: -1.5,
               lineHeight: 1.1,
-              maxWidth: 900,
+              maxWidth: 940,
             }}
           >
-            Building AI-powered SaaS & full-stack web apps.
+            Building AI-powered SaaS &amp; full-stack web apps.
           </div>
-          <div style={{ fontSize: 28, color: "#a3a3a3", maxWidth: 980 }}>
-            React · Node.js · TypeScript · Bun · PostgreSQL · Gemini AI
+          <div
+            style={{
+              display: "flex",
+              fontSize: 28,
+              color: "#a3a3a3",
+              maxWidth: 980,
+            }}
+          >
+            I work across Next.js, React.js, Node.js, Bun.js and TypeScript.
           </div>
         </div>
 
@@ -84,6 +107,7 @@ export default function OGImage() {
                 <div
                   key={t}
                   style={{
+                    display: "flex",
                     fontSize: 22,
                     color: "#d4d4d4",
                     border: "1px solid #404040",
@@ -96,7 +120,15 @@ export default function OGImage() {
               ),
             )}
           </div>
-          <div style={{ fontSize: 24, color: "#737373" }}>{site.location}</div>
+          <div
+            style={{
+              display: "flex",
+              fontSize: 24,
+              color: "#737373",
+            }}
+          >
+            {site.location}
+          </div>
         </div>
       </div>
     ),
