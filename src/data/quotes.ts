@@ -4,26 +4,24 @@ export type Quote = {
   source?: string;
 };
 
-const API_URL = "https://api.animechan.io/v1/quotes/random";
+const API_URL = "https://dummyjson.com/quotes/random";
 
 /**
- * Live quote from AnimeChan. Cached for an hour on the server so the whole
- * site shares one request per hour, comfortably within the free daily quota.
- * Returns null on any failure so callers can fall back to curated quotes.
+ * Live quote from DummyJSON. Cached for an hour on the server so the whole
+ * site shares one request per hour. Returns null on any failure so callers
+ * can fall back to curated quotes.
  */
-export async function getAnimeQuote(): Promise<Quote | null> {
+export async function getLiveQuote(): Promise<Quote | null> {
   try {
     const res = await fetch(API_URL, { next: { revalidate: 3600 } });
     if (!res.ok) return null;
 
-    const json = await res.json();
-    const data = json?.data;
-    if (!data?.content || !data?.character?.name) return null;
+    const data: { quote?: string; author?: string } = await res.json();
+    if (!data.quote || !data.author) return null;
 
     return {
-      text: data.content,
-      author: data.character.name,
-      source: data.anime?.name,
+      text: data.quote,
+      author: data.author,
     };
   } catch {
     return null;
@@ -56,10 +54,10 @@ const FALLBACK_QUOTES: Quote[] = [
 ];
 
 /**
- * Builds the rotation pool: the live AnimeChan quote first (when available),
+ * Builds the rotation pool: the live DummyJSON quote first (when available),
  * followed by curated fallbacks so the section always has something to show.
  */
 export async function getQuotes(): Promise<Quote[]> {
-  const live = await getAnimeQuote();
+  const live = await getLiveQuote();
   return [...(live ? [live] : []), ...FALLBACK_QUOTES];
 }
