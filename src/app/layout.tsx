@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Inter, Schibsted_Grotesk, JetBrains_Mono, Instrument_Serif } from "next/font/google";
+import { Analytics } from "@vercel/analytics/next";
 import { site } from "@/data/site";
 import { siteUrl } from "@/lib/site";
 import { InlineScript } from "@/components/InlineScript";
@@ -125,6 +126,7 @@ export default function RootLayout({
       </head>
       <body className="font-sans flex min-h-screen flex-col bg-background text-foreground">
         {children}
+        <Analytics />
       </body>
     </html>
   );
