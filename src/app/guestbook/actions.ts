@@ -12,7 +12,14 @@ const RATE_LIMIT_MS = 60_000;
 
 // Best-effort, in-memory per-user throttle. A single server instance is the
 // common deployment for a portfolio; this stops rapid double-posts.
+// Bounded so a flood of distinct user ids can't grow memory without limit.
+const MAX_TRACKED_USERS = 5000;
 const lastPostAt = new Map<string, number>();
+
+function trackPost(userId: string, now: number) {
+  if (lastPostAt.size >= MAX_TRACKED_USERS) lastPostAt.clear();
+  lastPostAt.set(userId, now);
+}
 
 export type EntryFormState = {
   error?: string;
@@ -63,7 +70,7 @@ export async function postEntry(
       comment,
     };
   }
-  lastPostAt.set(session.user.id, now);
+  trackPost(session.user.id, now);
 
   try {
     // One row per user: posting again updates the existing entry.
@@ -88,7 +95,8 @@ export async function postEntry(
           updatedAt: sql`now()`,
         },
       });
-  } catch {
+  } catch (err) {
+    console.warn("[guestbook] post failed:", err);
     return {
       error: "Something went wrong posting your rating. Please try again.",
       rating,
@@ -113,15 +121,23 @@ export async function deleteEntry(
     return { error: "Please sign in to delete your entry." };
   }
 
-  const id = String(formData.get("id") ?? "");
+  const id = String(formData.get("id") ?? "").trim();
+  if (!id) {
+    return { error: "Missing entry id. Please try again." };
+  }
 
   // Ownership check in the WHERE clause — a user can only ever delete their own
   // row. No client-supplied fields are trusted beyond the id.
-  await db
-    .delete(guestbook)
-    .where(
-      and(eq(guestbook.id, id), eq(guestbook.userId, session.user.id)),
-    );
+  try {
+    await db
+      .delete(guestbook)
+      .where(
+        and(eq(guestbook.id, id), eq(guestbook.userId, session.user.id)),
+      );
+  } catch (err) {
+    console.warn("[guestbook] delete failed:", err);
+    return { error: "Something went wrong deleting your entry." };
+  }
 
   updateTag("guestbook");
 
@@ -129,6 +145,10 @@ export async function deleteEntry(
 }
 
 export async function signOutAction() {
-  await auth.api.signOut({ headers: await headers() });
+  try {
+    await auth.api.signOut({ headers: await headers() });
+  } catch (err) {
+    console.warn("[guestbook] sign-out failed:", err);
+  }
   updateTag("guestbook");
 }

@@ -1,8 +1,6 @@
 import Link from "next/link";
 import { GuestbookEntryCard } from "./GuestbookEntryCard";
-import type { GuestbookEntry } from "@/data/guestbook";
-
-const PAGE_SIZE = 6;
+import { GUESTBOOK_PAGE_SIZE, type GuestbookEntry } from "@/data/guestbook";
 
 export function GuestbookList({
   entries,
@@ -15,7 +13,7 @@ export function GuestbookList({
   page: number;
   currentUserId?: string;
 }) {
-  const totalPages = Math.max(1, Math.ceil(total / PAGE_SIZE));
+  const totalPages = Math.max(1, Math.ceil(total / GUESTBOOK_PAGE_SIZE));
 
   if (entries.length === 0) {
     return (
@@ -52,7 +50,6 @@ export function GuestbookList({
             <Link
               href={`/guestbook?page=${page - 1}`}
               className="text-sm font-medium text-foreground/70 transition-colors hover:text-primary"
-              prefetch
             >
               <span className="mr-1.5">←</span>
               Newer
@@ -69,7 +66,6 @@ export function GuestbookList({
             <Link
               href={`/guestbook?page=${page + 1}`}
               className="text-sm font-medium text-foreground/70 transition-colors hover:text-primary"
-              prefetch
             >
               Older
               <span className="ml-1.5">→</span>
