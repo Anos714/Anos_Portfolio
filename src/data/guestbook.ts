@@ -121,29 +121,6 @@ export async function getRecentGuestbookEntries(
   return rows.map(toEntry);
 }
 
-/** Highest-rated entries first — used for the home preview when there is
- *  enough data to make an average meaningful. */
-const getCachedTopGuestbookEntries = unstable_cache(
-  async (limit: number): Promise<SerializedEntry[]> => {
-    const rows = await db
-      .select()
-      .from(guestbook)
-      .where(visible)
-      .orderBy(desc(guestbook.rating), desc(guestbook.createdAt))
-      .limit(limit);
-    return rows.map(toSerializedEntry);
-  },
-  ["guestbook-top"],
-  { tags: [GUESTBOOK_TAG], revalidate: GUESTBOOK_REVALIDATE },
-);
-
-export async function getTopGuestbookEntries(
-  limit = 3,
-): Promise<GuestbookEntry[]> {
-  const rows = await getCachedTopGuestbookEntries(limit);
-  return rows.map(toEntry);
-}
-
 const getCachedGuestbookStats = unstable_cache(
   async (): Promise<{ count: number; average: number }> => {
     const [row] = await db

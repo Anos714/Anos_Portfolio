@@ -1,5 +1,3 @@
-import { getTech } from "./tech";
-
 export type Project = {
   title: string;
   year: string;
@@ -149,5 +147,3 @@ export const projects: Project[] = [
     github: "https://github.com/Anos714/SmartBillr",
   },
 ];
-
-export const projectIcon = (p: Project) => getTech(p.title);

@@ -71,16 +71,6 @@ export const navLinks = [
   { label: "Resume", href: "/resume" },
 ];
 
-export const resumeLink = {
-  label: "Resume",
-  href: "#resume",
-  preview: {
-    title: "Rahul Sain — Resume",
-    domain: "portfolio",
-    icon: "📄",
-  },
-};
-
 export const footerLinks = {
   code: {
     label: "code",
