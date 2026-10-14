@@ -14,7 +14,7 @@ export function PersonJsonLd() {
     image: `${siteUrl}/icon.png`,
     jobTitle: site.title,
     description: site.summary,
-    email: `mailto:${site.email}`,
+    email: site.email,
     address: {
       "@type": "PostalAddress",
       addressLocality: site.location,
@@ -38,7 +38,11 @@ export function PersonJsonLd() {
   return (
     <script
       type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(json) }}
+      dangerouslySetInnerHTML={{
+        // Escape `<` so a future `</script>` sequence in content data
+        // can never break out of this block.
+        __html: JSON.stringify(json).replace(/</g, "\\u003c"),
+      }}
     />
   );
 }

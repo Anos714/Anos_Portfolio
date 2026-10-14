@@ -16,6 +16,14 @@ const baseURL =
   process.env.NEXT_PUBLIC_SITE_URL ??
   "http://localhost:3000";
 
+const googleClientId = process.env.GOOGLE_CLIENT_ID;
+const googleClientSecret = process.env.GOOGLE_CLIENT_SECRET;
+if (!googleClientId || !googleClientSecret) {
+  throw new Error(
+    "Missing GOOGLE_CLIENT_ID / GOOGLE_CLIENT_SECRET environment variables — Google sign-in cannot initialize.",
+  );
+}
+
 export const auth = betterAuth({
   baseURL,
   secret: process.env.BETTER_AUTH_SECRET,
@@ -27,8 +35,8 @@ export const auth = betterAuth({
   emailAndPassword: { enabled: false },
   socialProviders: {
     google: {
-      clientId: process.env.GOOGLE_CLIENT_ID!,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
+      clientId: googleClientId,
+      clientSecret: googleClientSecret,
     },
   },
   plugins: [nextCookies()],

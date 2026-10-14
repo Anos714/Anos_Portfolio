@@ -25,6 +25,7 @@ export function QuoteCarousel({ quotes }: { quotes: Quote[] }) {
   }, [auto, quotes.length]);
 
   const quote = quotes[index];
+  if (!quote) return null;
 
   return (
     <figure

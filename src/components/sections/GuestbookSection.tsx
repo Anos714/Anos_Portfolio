@@ -61,6 +61,13 @@ export async function GuestbookSection() {
       {/* Sign in with Google when logged out; the rating form when logged in. */}
       <Reveal delay={0.1}>
         <GuestbookForm
+          // Remount when the saved entry changes so the form picks up
+          // the fresh rating/comment (shows "Update" after posting).
+          key={
+            existingEntry
+              ? `${existingEntry.id}:${existingEntry.rating}:${existingEntry.comment ?? ""}`
+              : "new"
+          }
           user={user}
           existingEntry={existingEntry}
           callbackURL="/"

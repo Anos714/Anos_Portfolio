@@ -10,14 +10,8 @@ export function VisitorCount() {
 
     async function record() {
       try {
-        const res = await fetch("/api/visits", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            path: window.location.pathname,
-            referrer: document.referrer || null,
-          }),
-        });
+        // No body: the API identifies the visitor from headers alone.
+        const res = await fetch("/api/visits", { method: "POST" });
         const data = await res.json();
         if (!cancelled && typeof data.uniqueVisitors === "number") {
           setCount(data.uniqueVisitors);

@@ -13,7 +13,7 @@ const DAY_RE =
   /<td[^>]*class="[^"]*ContributionCalendar-day[^"]*"[^>]*>/g;
 const ATTR_RE = /([\w-]+)="([^"]*)"/g;
 const TOOLTIP_RE =
-  /<tool-tip[^>]*for="([^"]+)"[^>]*>([\s\S]*?)<\/tool-tip>/;
+  /<tool-tip[^>]*for="([^"]+)"[^>]*>([\s\S]*?)<\/tool-tip>/g;
 
 function parseAttrs(tag: string): Record<string, string> {
   const attrs: Record<string, string> = {};
@@ -46,15 +46,17 @@ export async function getContributions(): Promise<ContributionWeek[] | null> {
 
     const tooltips = new Map<string, string>();
     let tip: RegExpExecArray | null;
-    const tipRe = new RegExp(TOOLTIP_RE.source, "g");
-    while ((tip = tipRe.exec(html)) !== null) {
+    // Reuse the module-level regexes (resetting lastIndex) instead of
+    // recompiling them on every call.
+    TOOLTIP_RE.lastIndex = 0;
+    while ((tip = TOOLTIP_RE.exec(html)) !== null) {
       tooltips.set(tip[1], tip[2]);
     }
 
     const days: ContributionDay[] = [];
     let match: RegExpExecArray | null;
-    const dayRe = new RegExp(DAY_RE.source, "g");
-    while ((match = dayRe.exec(html)) !== null) {
+    DAY_RE.lastIndex = 0;
+    while ((match = DAY_RE.exec(html)) !== null) {
       const attrs = parseAttrs(match[0]);
       const date = attrs["data-date"];
       const level = Number(attrs["data-level"]);
@@ -78,7 +80,8 @@ export async function getContributions(): Promise<ContributionWeek[] | null> {
       weeks.push(days.slice(i, i + 7));
     }
     return weeks;
-  } catch {
+  } catch (err) {
+    console.warn("[contributions] scrape failed:", err);
     return null;
   }
 }

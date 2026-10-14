@@ -31,7 +31,15 @@ export default function ResumePage() {
           <Reveal delay={0.05}>
             <p className="mt-6 text-sm text-foreground/60">
               My latest resume is embedded below. If it doesn&apos;t load, you
-              can open it directly via the link.
+              can{" "}
+              <DottedLink
+                href={RESUME_PREVIEW_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                open it directly
+              </DottedLink>
+              .
             </p>
           </Reveal>
 

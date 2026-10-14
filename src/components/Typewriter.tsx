@@ -56,7 +56,9 @@ export function Typewriter({
       </span>
       <span className={cn("absolute inset-0 whitespace-pre", className)}>
         {text}
-        <span className="animate-pulse">|</span>
+        <span className="animate-pulse" aria-hidden="true">
+          |
+        </span>
       </span>
     </span>
   );

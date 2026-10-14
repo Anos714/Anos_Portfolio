@@ -24,7 +24,6 @@ function Avatar({
         width={size}
         height={size}
         className="size-9 shrink-0 rounded-full object-cover ring-1 ring-neutral-200 dark:ring-neutral-800"
-        unoptimized
       />
     );
   }

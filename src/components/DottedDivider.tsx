@@ -5,7 +5,9 @@ export function DottedDivider({
 }: {
   className?: string;
 }) {
-  const id = React.useId();
+  // useId() can contain characters (e.g. ":") that break `url(#id)`
+  // references in some browsers — strip them for a safe fragment id.
+  const id = React.useId().replace(/[^a-zA-Z0-9_-]/g, "");
   return (
     <svg
       className={`pointer-events-none relative block w-full text-neutral-400 opacity-40 dark:text-neutral-600 ${className}`}

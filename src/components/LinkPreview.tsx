@@ -105,18 +105,19 @@ export const LinkPreview = ({
           setOpen(open);
         }}
       >
-        <HoverCardPrimitive.Trigger
-          onMouseMove={handleMouseMove}
-          className={cn(
-            "group relative inline-flex transition-colors text-foreground/70 hover:text-primary",
-            className,
-          )}
-          href={url}
-        >
-          <span className="relative inline-block">
-            {children}
-            <DottedUnderline />
-          </span>
+        <HoverCardPrimitive.Trigger asChild onMouseMove={handleMouseMove}>
+          <a
+            href={url}
+            className={cn(
+              "group relative inline-flex transition-colors text-foreground/70 hover:text-primary",
+              className,
+            )}
+          >
+            <span className="relative inline-block">
+              {children}
+              <DottedUnderline />
+            </span>
+          </a>
         </HoverCardPrimitive.Trigger>
 
         <HoverCardPrimitive.Portal>

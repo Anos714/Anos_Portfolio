@@ -28,6 +28,20 @@ const GUESTBOOK_TAG = "guestbook";
 // Fallback freshness window. Every mutation invalidates the tag explicitly, so
 // this only bounds staleness for changes made directly in the database.
 const GUESTBOOK_REVALIDATE = 300; // 5 minutes
+// Single source of truth for the guestbook page size — the list component
+// derives its page count from this so the two can never drift apart.
+export const GUESTBOOK_PAGE_SIZE = 6;
+const GUESTBOOK_MAX_LIMIT = 50;
+
+function clampPage(page: number): number {
+  return Number.isFinite(page) ? Math.max(1, Math.floor(page)) : 1;
+}
+
+function clampLimit(limit: number): number {
+  return Number.isFinite(limit)
+    ? Math.min(GUESTBOOK_MAX_LIMIT, Math.max(1, Math.floor(limit)))
+    : GUESTBOOK_PAGE_SIZE;
+}
 
 const visible = eq(guestbook.hidden, false);
 
@@ -50,7 +64,7 @@ function toEntry(entry: SerializedEntry): GuestbookEntry {
 const getCachedGuestbookEntries = unstable_cache(
   async ({
     page = 1,
-    limit = 6,
+    limit = GUESTBOOK_PAGE_SIZE,
   }: {
     page?: number;
     limit?: number;
@@ -59,8 +73,11 @@ const getCachedGuestbookEntries = unstable_cache(
     total: number;
     totalPages: number;
   }> => {
-    const safePage = Math.max(1, page);
-    const offset = (safePage - 1) * limit;
+    // Clamp: a limit of 0/negative would make `Math.ceil(total / limit)`
+    // blow up to Infinity, and huge limits would allow full-table scans.
+    const safeLimit = clampLimit(limit);
+    const safePage = clampPage(page);
+    const offset = (safePage - 1) * safeLimit;
 
     const [rows, [totalRow]] = await Promise.all([
       db
@@ -68,7 +85,7 @@ const getCachedGuestbookEntries = unstable_cache(
         .from(guestbook)
         .where(visible)
         .orderBy(desc(guestbook.createdAt))
-        .limit(limit)
+        .limit(safeLimit)
         .offset(offset),
       db.select({ value: count() }).from(guestbook).where(visible),
     ]);
@@ -77,7 +94,7 @@ const getCachedGuestbookEntries = unstable_cache(
     return {
       entries: rows.map(toSerializedEntry),
       total,
-      totalPages: Math.max(1, Math.ceil(total / limit)),
+      totalPages: Math.max(1, Math.ceil(total / safeLimit)),
     };
   },
   ["guestbook-entries"],
@@ -90,7 +107,7 @@ const getCachedGuestbookEntries = unstable_cache(
  */
 export async function getGuestbookEntries({
   page = 1,
-  limit = 6,
+  limit = GUESTBOOK_PAGE_SIZE,
 }: {
   page?: number;
   limit?: number;
@@ -118,29 +135,6 @@ export async function getRecentGuestbookEntries(
   limit = 3,
 ): Promise<GuestbookEntry[]> {
   const rows = await getCachedRecentGuestbookEntries(limit);
-  return rows.map(toEntry);
-}
-
-/** Highest-rated entries first — used for the home preview when there is
- *  enough data to make an average meaningful. */
-const getCachedTopGuestbookEntries = unstable_cache(
-  async (limit: number): Promise<SerializedEntry[]> => {
-    const rows = await db
-      .select()
-      .from(guestbook)
-      .where(visible)
-      .orderBy(desc(guestbook.rating), desc(guestbook.createdAt))
-      .limit(limit);
-    return rows.map(toSerializedEntry);
-  },
-  ["guestbook-top"],
-  { tags: [GUESTBOOK_TAG], revalidate: GUESTBOOK_REVALIDATE },
-);
-
-export async function getTopGuestbookEntries(
-  limit = 3,
-): Promise<GuestbookEntry[]> {
-  const rows = await getCachedTopGuestbookEntries(limit);
   return rows.map(toEntry);
 }
 

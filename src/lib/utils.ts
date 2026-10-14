@@ -8,6 +8,7 @@ export function cn(...inputs: ClassValue[]) {
 
 /** Human-friendly relative time: "3 days ago", "about 1 hour ago". */
 export function formatRelativeTime(date: Date): string {
+  if (!(date instanceof Date) || Number.isNaN(date.getTime())) return "";
   return formatDistanceToNow(date, { addSuffix: true });
 }
 
