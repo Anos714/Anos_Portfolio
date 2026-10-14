@@ -24,6 +24,7 @@ export const projects: Project[] = [
       "Gemini AI",
     ],
     image: "/projects/waku.jpg",
+    logo: "/projects/waku.svg",
     description: [
       "Built a local-first profile and identity-card studio that turns a name, role, and links into a themeable public profile page plus a matching downloadable identity card, with live publishing at /p/<slug>.",
       "Engineered a single shared ProfileView renderer for both the editor live preview and the public page, with token-based theming (10 themes, 8 fonts, 16 accents, 8 backgrounds), 4 page designs, and 8 card layouts exported as PNG/JPEG/WebP/AVIF at 2x with theme-colored QR codes.",
