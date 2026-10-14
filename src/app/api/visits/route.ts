@@ -1,5 +1,5 @@
 import { createHash } from "node:crypto";
-import { NextRequest } from "next/server";
+import type { NextRequest } from "next/server";
 import { count, gte, sql } from "drizzle-orm";
 import { db } from "@/db";
 import { visits } from "@/db/schema";
@@ -28,6 +28,9 @@ function getUtcDateKey(): string {
 }
 
 export const runtime = "nodejs";
+// GET reads live counters from the database, so it must never be statically
+// cached — without this, Next would freeze the first response in production.
+export const dynamic = "force-dynamic";
 
 const COUNT_CACHE_TTL_MS = 5_000;
 let countCache: { value: number; at: number } | null = null;
@@ -75,13 +78,8 @@ export async function GET() {
 
 export async function POST(request: NextRequest) {
   try {
-    let body: { path?: unknown; referrer?: unknown } = {};
-    try {
-      body = await request.json();
-    } catch {
-      body = {};
-    }
-
+    // The visitor is identified purely from request headers (IP + UA);
+    // no request body is read.
     const ip = getClientIp(request);
     const userAgent = request.headers.get("user-agent") ?? "";
     const visitorId = getVisitorId(ip, userAgent);
