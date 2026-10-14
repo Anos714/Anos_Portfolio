@@ -10,7 +10,8 @@ import { ThemeToggle } from "./ThemeToggle";
 
 function isActive(pathname: string, href: string) {
   if (href === "/") return pathname === "/";
-  return pathname.startsWith(href);
+  // Boundary-aware: "/workXYZ" must not count as "/work".
+  return pathname === href || pathname.startsWith(`${href}/`);
 }
 
 export function Navbar() {

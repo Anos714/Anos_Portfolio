@@ -7,7 +7,9 @@ export function DottedUnderline({
   className?: string;
   from?: string;
 }) {
-  const id = React.useId();
+  // useId() can contain characters (e.g. ":") that break `url(#id)`
+  // references in some browsers — strip them for a safe fragment id.
+  const id = React.useId().replace(/[^a-zA-Z0-9_-]/g, "");
   return (
     <svg
       className={`pointer-events-none absolute bottom-0 left-0 w-full text-neutral-400 dotted-underline dark:text-neutral-500 ${className}`}
