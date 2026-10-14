@@ -82,6 +82,13 @@ export default async function GuestbookPage({
           <Reveal delay={0.1}>
             <div className="mt-6">
               <GuestbookForm
+                // Remount when the saved entry changes so the form picks up
+                // the fresh rating/comment (shows "Update" after posting).
+                key={
+                  existingEntry
+                    ? `${existingEntry.id}:${existingEntry.rating}:${existingEntry.comment ?? ""}`
+                    : "new"
+                }
                 user={user}
                 existingEntry={existingEntry}
                 callbackURL="/guestbook"

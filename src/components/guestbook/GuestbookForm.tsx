@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useActionState, useEffect, useState } from "react";
+import { useActionState, useState } from "react";
 import { motion } from "framer-motion";
 import { StarRating } from "./StarRating";
 import { postEntry, signOutAction } from "@/app/guestbook/actions";
@@ -48,14 +48,6 @@ export function GuestbookForm({
     EntryFormState,
     FormData
   >(postEntry, {});
-
-  // After a successful post the server sends back the saved entry — sync the
-  // form so it shows "Update your rating" instead of stale local state.
-  // Deps are primitives, so in-progress edits are never clobbered.
-  useEffect(() => {
-    setRating(existingEntry?.rating ?? 0);
-    setComment(existingEntry?.comment ?? "");
-  }, [existingEntry?.rating, existingEntry?.comment]);
 
   // Not signed in — the only thing to show is the Google sign-in button.
   if (!user) {
