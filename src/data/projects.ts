@@ -13,6 +13,29 @@ export type Project = {
 
 export const projects: Project[] = [
   {
+    title: "Waku",
+    year: "2026",
+    tech: [
+      "Next.js",
+      "TypeScript",
+      "Tailwind CSS",
+      "PostgreSQL",
+      "Drizzle ORM",
+      "Neon",
+      "OAuth",
+      "Gemini AI",
+    ],
+    image: "/projects/waku.jpg",
+    description: [
+      "Built a local-first profile and identity-card studio that turns a name, role, and links into a themeable public profile page plus a matching downloadable identity card, with live publishing at /p/<slug>.",
+      "Engineered a single shared ProfileView renderer for both the editor live preview and the public page, with token-based theming (10 themes, 8 fonts, 16 accents, 8 backgrounds), 4 page designs, and 8 card layouts exported as PNG/JPEG/WebP/AVIF at 2x with theme-colored QR codes.",
+      "Implemented server-side Gemini AI bio/tagline writing constrained to profile facts, signed Cloudinary photo uploads, and Better Auth GitHub/Google publishing with anonymous draft claiming and server-owned slugs.",
+      "Added anonymous visitor ratings with hashed-fingerprint deduplication, contact and legal pages, and graceful degradation that reports exactly what is missing instead of failing when DB, OAuth, or AI keys are unconfigured.",
+    ],
+    live: "https://wakucards.vercel.app",
+    github: "https://github.com/Anos714/waku",
+  },
+  {
     title: "Xcel",
     year: "2026",
     tech: [
