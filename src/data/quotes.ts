@@ -23,7 +23,8 @@ export async function getLiveQuote(): Promise<Quote | null> {
       text: data.quote,
       author: data.author,
     };
-  } catch {
+  } catch (err) {
+    console.warn("[quotes] live quote fetch failed:", err);
     return null;
   }
 }
