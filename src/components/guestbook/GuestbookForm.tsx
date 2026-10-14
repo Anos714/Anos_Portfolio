@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useActionState, useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { StarRating } from "./StarRating";
@@ -89,10 +90,11 @@ export function GuestbookForm({
     >
       <div className="flex items-center gap-3">
         {user.image ? (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img
+          <Image
             src={user.image}
             alt={user.name}
+            width={36}
+            height={36}
             className="size-9 rounded-full object-cover ring-1 ring-neutral-200 dark:ring-neutral-800"
           />
         ) : (

@@ -10,8 +10,14 @@ export const alt = `${site.name} — ${site.title}`;
 
 export default function OGImage() {
   const logoPath = path.join(process.cwd(), "public", "logo.jpeg");
-  const logoBase64 = fs.readFileSync(logoPath).toString("base64");
-  const logoSrc = `data:image/jpeg;base64,${logoBase64}`;
+  let logoSrc: string | null = null;
+  try {
+    logoSrc = `data:image/jpeg;base64,${fs.readFileSync(logoPath).toString("base64")}`;
+  } catch {
+    // A missing/unreadable logo must not crash OG generation — render
+    // the card without it.
+    logoSrc = null;
+  }
 
   return new ImageResponse(
     (
@@ -28,13 +34,15 @@ export default function OGImage() {
         }}
       >
         <div style={{ display: "flex", alignItems: "center", gap: 24 }}>
-          <img
-            src={logoSrc}
-            width={96}
-            height={96}
-            style={{ borderRadius: 20, objectFit: "cover" }}
-            alt=""
-          />
+          {logoSrc ? (
+            <img
+              src={logoSrc}
+              width={96}
+              height={96}
+              style={{ borderRadius: 20, objectFit: "cover" }}
+              alt=""
+            />
+          ) : null}
           <div
             style={{
               display: "flex",
