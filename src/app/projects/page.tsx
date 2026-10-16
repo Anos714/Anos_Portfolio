@@ -11,7 +11,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Projects",
   description:
-    "AI-powered SaaS and full-stack projects by Rahul Sain — Waku, Xcel, Inkwell, Konnect, ThePerfectResume, and SmartBillr, built with React, Node.js, TypeScript, PostgreSQL, and Gemini AI.",
+    "AI-powered SaaS and full-stack projects by Rahul Sain — RoastMyTube, Waku, stackit, CodeVault, Xcel, Inkwell, Konnect, ThePerfectResume, and SmartBillr, built with React, Node.js, TypeScript, PostgreSQL, and Gemini AI.",
   alternates: { canonical: "/projects" },
 };
 
