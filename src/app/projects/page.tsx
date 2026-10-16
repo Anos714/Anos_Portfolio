@@ -3,7 +3,9 @@ import { DottedDivider } from "@/components/DottedDivider";
 import { SectionHeading } from "@/components/SectionHeading";
 import { Reveal } from "@/components/Reveal";
 import { ProjectCard } from "@/components/project/ProjectCard";
+import { ToolRow } from "@/components/project/ToolRow";
 import { projects } from "@/data/projects";
+import { tools } from "@/data/tools";
 import { DottedLink } from "@/components/DottedLink";
 import { Footer } from "@/components/Footer";
 import type { Metadata } from "next";
@@ -32,6 +34,20 @@ export default function ProjectsPage() {
               <Reveal key={project.title} delay={i * 0.06}>
                 <ProjectCard project={project} />
               </Reveal>
+            ))}
+          </div>
+
+          <div className="my-10 w-full shrink-0">
+            <DottedDivider />
+          </div>
+
+          <Reveal>
+            <SectionHeading>Developer Tools / OSS Work</SectionHeading>
+          </Reveal>
+
+          <div className="mt-2 flex flex-col">
+            {tools.map((tool, i) => (
+              <ToolRow key={tool.title} tool={tool} index={i} />
             ))}
           </div>
 
