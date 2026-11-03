@@ -5,7 +5,6 @@ import { ProjectsSection } from "@/components/sections/ProjectsSection";
 import { WorkSection } from "@/components/sections/WorkSection";
 import { ContributionsSection } from "@/components/sections/ContributionsSection";
 import { BlogsSection } from "@/components/sections/BlogsSection";
-import { ResumeSection } from "@/components/sections/ResumeSection";
 import { CallToActionSection } from "@/components/sections/CallToActionSection";
 import { GuestbookSection } from "@/components/sections/GuestbookSection";
 import { QuotesSection } from "@/components/sections/QuotesSection";
@@ -45,12 +44,6 @@ export default function Home() {
           </div>
 
           <BlogsSection />
-
-          <div className="my-10 w-full shrink-0">
-            <DottedDivider />
-          </div>
-
-          <ResumeSection />
 
           <div className="my-10 w-full shrink-0">
             <DottedDivider />
