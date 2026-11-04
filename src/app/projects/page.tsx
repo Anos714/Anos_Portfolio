@@ -3,9 +3,8 @@ import { DottedDivider } from "@/components/DottedDivider";
 import { SectionHeading } from "@/components/SectionHeading";
 import { Reveal } from "@/components/Reveal";
 import { ProjectCard } from "@/components/project/ProjectCard";
-import { ToolRow } from "@/components/project/ToolRow";
 import { projects } from "@/data/projects";
-import { tools } from "@/data/tools";
+import { SeeMoreLink } from "@/components/SeeMoreLink";
 import { DottedLink } from "@/components/DottedLink";
 import { Footer } from "@/components/Footer";
 import type { Metadata } from "next";
@@ -13,7 +12,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Projects",
   description:
-    "AI-powered SaaS and full-stack projects by Rahul Sain — RoastMyTube, Waku, stackit, CodeVault, Xcel, Inkwell, Konnect, ThePerfectResume, and SmartBillr, built with React, Node.js, TypeScript, PostgreSQL, and Gemini AI.",
+    "AI-powered SaaS and full-stack projects by Rahul Sain — RoastMyTube, Waku, stackit, CodeVault, Xcel, Inkwell, Konnect, ThePerfectResume, SmartBillr, kilosmith, Vigil, and Soso, built with React, Next.js, Go, TypeScript, PostgreSQL, and Gemini AI.",
   alternates: { canonical: "/projects" },
 };
 
@@ -42,14 +41,11 @@ export default function ProjectsPage() {
           </div>
 
           <Reveal>
-            <SectionHeading>Developer Tools / OSS Work</SectionHeading>
+            <SeeMoreLink
+              href="/tools"
+              label="Developer tools & OSS work"
+            />
           </Reveal>
-
-          <div className="mt-2 flex flex-col">
-            {tools.map((tool, i) => (
-              <ToolRow key={tool.title} tool={tool} index={i} />
-            ))}
-          </div>
 
           <div className="my-10 w-full shrink-0">
             <DottedDivider />
