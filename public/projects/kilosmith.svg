@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Kilosmith">
+  <rect width="64" height="64" fill="#fff9ee"/>
+  <rect x="12" y="16" width="40" height="10" rx="5" fill="#ffd23f"/>
+  <rect x="12" y="29" width="28" height="10" rx="5" fill="#a9c7ff"/>
+  <rect x="12" y="42" width="15" height="10" rx="5" fill="#ff5ca8"/>
+</svg>
