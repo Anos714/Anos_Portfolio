@@ -4,6 +4,7 @@ import { site } from "@/data/site";
 import { siteUrl } from "@/lib/site";
 import { Analytics } from "@vercel/analytics/next";
 import { InlineScript } from "@/components/InlineScript";
+import { CommandPaletteProvider } from "@/components/CommandPalette";
 import "./globals.css";
 
 const inter = Inter({
@@ -125,7 +126,7 @@ export default function RootLayout({
         />
       </head>
       <body className="font-sans flex min-h-screen flex-col bg-background text-foreground">
-        {children}
+        <CommandPaletteProvider>{children}</CommandPaletteProvider>
         <Analytics />
       </body>
     </html>

@@ -7,6 +7,7 @@ import { navLinks, site } from "@/data/site";
 import { DottedUnderline } from "./DottedUnderline";
 import { Typewriter } from "./Typewriter";
 import { ThemeToggle } from "./ThemeToggle";
+import { CommandTrigger } from "./CommandPalette";
 
 function isActive(pathname: string, href: string) {
   if (href === "/") return pathname === "/";
@@ -24,11 +25,12 @@ export function Navbar() {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
     >
-      <div className="absolute right-4 top-4 md:top-8">
+      <div className="absolute right-4 top-4 flex items-center gap-2 md:top-8">
+        <CommandTrigger />
         <ThemeToggle />
       </div>
 
-      <div className="flex items-center gap-2 pr-10">
+      <div className="flex items-center gap-2 pr-32 sm:pr-44">
         <Link href="/" aria-label="Go to home page" className="rounded-md">
           <motion.img
             src="/logo.jpeg"

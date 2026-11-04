@@ -5,6 +5,7 @@ import { socials } from "@/data/site";
 import { LinkPreview } from "../LinkPreview";
 import { DottedLink } from "../DottedLink";
 import { VisitorCount } from "../VisitorCount";
+import { CommandHint } from "../CommandPalette";
 
 const linkOf = (label: string) => socials.find((x) => x.label === label);
 
@@ -97,8 +98,12 @@ export function HeroSection() {
           {x && <LinkPreview url={x.href}>{x.label}</LinkPreview>}
         </motion.div>
 
-        <motion.div variants={item} className="mt-2">
+        <motion.div
+          variants={item}
+          className="mt-2 flex flex-wrap items-center gap-2"
+        >
           <VisitorCount />
+          <CommandHint />
         </motion.div>
       </div>
     </motion.div>
