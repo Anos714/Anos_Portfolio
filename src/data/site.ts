@@ -64,6 +64,7 @@ export const highlights = [
 export const navLinks = [
   { label: "Home", href: "/" },
   { label: "Projects", href: "/projects" },
+  { label: "Tools", href: "/tools" },
   { label: "Work", href: "/work" },
   { label: "Blogs", href: "/blogs" },
   { label: "Guestbook", href: "/guestbook" },
