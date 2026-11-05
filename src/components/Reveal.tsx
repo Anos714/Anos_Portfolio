@@ -14,6 +14,9 @@ const variants: Variants = {
           opacity: 1,
           y: 0,
           filter: "blur(0px)",
+          // A leftover blur(0px) keeps the subtree in a filter layer, which makes
+          // every hover animation inside it re-raster. Drop it once we land.
+          transitionEnd: { filter: "none" },
           transition: {
             duration: 0.55,
             delay,
