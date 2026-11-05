@@ -3,89 +3,130 @@ import { IconBadge } from "../IconBadge";
 import { TechIcon } from "../TechIcon";
 import type { Project } from "@/data/projects";
 
+const VISIBLE_TECH = 4;
+
 export function ProjectCard({ project }: { project: Project }) {
+  const shownTech = project.tech.slice(0, VISIBLE_TECH);
+  const hiddenTechCount = project.tech.length - shownTech.length;
+  const destination = project.live ?? project.github;
+
   return (
-    <article className="group flex h-full flex-col gap-3 overflow-hidden rounded-2xl bg-neutral-50/50 shadow-sm shadow-neutral-900/[0.03] ring-1 ring-neutral-200/70 transition-all duration-300 hover:-translate-y-1 hover:bg-neutral-50 hover:shadow-md hover:shadow-neutral-900/[0.06] hover:ring-neutral-300/80 dark:bg-neutral-900/50 dark:shadow-neutral-950/30 dark:ring-neutral-800/70 dark:hover:bg-neutral-900 dark:hover:shadow-neutral-950/50 dark:hover:ring-neutral-700/80">
+    <article className="group/card relative flex h-full flex-col overflow-hidden rounded-2xl bg-white/70 shadow-[0_1px_2px_rgba(10,10,10,0.04)] ring-1 ring-neutral-200/70 transition-[transform,box-shadow,background-color,ring-color] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-1.5 hover:bg-white hover:shadow-[0_30px_60px_-32px_rgba(10,10,10,0.35)] hover:ring-neutral-300/80 dark:bg-neutral-900/40 dark:shadow-none dark:ring-neutral-800/70 dark:hover:bg-neutral-900 dark:hover:shadow-[0_30px_60px_-32px_rgba(0,0,0,0.8)] dark:hover:ring-neutral-700/80">
+      <span
+        aria-hidden
+        className="pointer-events-none absolute inset-x-0 top-0 z-30 h-px origin-left scale-x-0 bg-gradient-to-r from-transparent via-neutral-400/80 to-transparent transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover/card:scale-x-100 dark:via-neutral-500/70"
+      />
+
       {project.image && (
-        <div className="relative aspect-[4/3] overflow-hidden">
+        <div className="relative aspect-[16/10] overflow-hidden bg-neutral-100 dark:bg-neutral-950">
           <Image
             src={project.image}
             alt={`${project.title} preview`}
             fill
             sizes="(max-width: 768px) 100vw, 50vw"
-            className="object-cover transition-transform duration-500 ease-out group-hover:scale-[1.04]"
+            className="object-cover object-top brightness-[0.97] saturate-[0.9] transition-[transform,filter] duration-[900ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover/card:scale-[1.05] group-hover/card:brightness-100 group-hover/card:saturate-100"
           />
+          <span
+            aria-hidden
+            className="absolute inset-0 bg-gradient-to-t from-neutral-950/45 via-neutral-950/5 to-transparent opacity-55 transition-opacity duration-500 group-hover/card:opacity-90"
+          />
+          <span
+            aria-hidden
+            className="absolute bottom-3 right-3 grid size-8 translate-y-1.5 place-items-center rounded-full bg-white/90 text-[13px] text-neutral-900 opacity-0 shadow-sm backdrop-blur transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover/card:translate-y-0 group-hover/card:opacity-100"
+          >
+            ↗
+          </span>
         </div>
       )}
-      <div className="flex flex-col gap-3 px-4 pb-4">
-        <div className="flex items-center gap-2">
-          <div className="transition-transform duration-300 group-hover:-rotate-6 group-hover:scale-110">
+
+      <div className="flex flex-1 flex-col gap-3 px-4 pb-4 pt-4 sm:px-5 sm:pb-5">
+        <div className="flex items-center gap-2.5">
+          <span className="shrink-0 transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover/card:-rotate-6 group-hover/card:scale-110">
             {project.logo ? (
               <Image
                 src={project.logo}
-                alt={`${project.title} logo`}
-                width={32}
-                height={32}
-                className="aspect-square size-8 rounded-md object-contain ring-1 ring-neutral-200/70 dark:ring-neutral-800/70"
+                alt=""
+                width={36}
+                height={36}
+                className="size-9 rounded-lg object-contain ring-1 ring-neutral-200/80 dark:ring-neutral-800/80"
               />
             ) : (
               <IconBadge name={project.tech[0]} />
             )}
-          </div>
-          <h3 className="text-sm font-medium text-foreground">
+          </span>
+          <h3 className="min-w-0 flex-1 truncate font-display text-[1.0625rem] font-medium leading-tight tracking-tight">
             {project.title}
           </h3>
-          <span className="ml-auto font-mono text-xs font-light text-foreground/50">
+          <span className="shrink-0 font-mono text-[11px] font-light tabular-nums tracking-widest text-foreground/45">
             {project.year}
           </span>
         </div>
 
-        <p className="text-sm leading-relaxed text-foreground/70 text-pretty">
+        <p className="line-clamp-2 text-sm leading-relaxed text-pretty text-foreground/65 transition-colors duration-500 group-hover/card:text-foreground/80">
           {project.description[0]}
         </p>
 
-        <div className="flex flex-wrap gap-2 pt-1">
-          {project.tech.map((t) => (
+        <div className="flex flex-wrap gap-1.5">
+          {shownTech.map((tech) => (
             <span
-              key={t}
-              className="inline-flex items-center gap-1.5 rounded-full border border-neutral-200 bg-neutral-50 px-2 py-0.5 text-xs font-medium text-foreground/70 transition-colors duration-200 hover:border-neutral-300 hover:bg-neutral-100 dark:border-neutral-800 dark:bg-neutral-900 dark:hover:border-neutral-700 dark:hover:bg-neutral-800"
+              key={tech}
+              className="inline-flex items-center gap-1.5 rounded-full border border-neutral-200/80 px-2 py-0.5 font-mono text-[11px] text-foreground/60 transition-colors duration-500 group-hover/card:border-neutral-300 group-hover/card:text-foreground/80 dark:border-neutral-800 dark:group-hover/card:border-neutral-700"
             >
-              <TechIcon name={t} className="size-3.5" />
-              {t}
+              <TechIcon name={tech} className="size-3.5" />
+              {tech}
             </span>
           ))}
+          {hiddenTechCount > 0 && (
+            <span className="inline-flex items-center px-1 py-0.5 font-mono text-[11px] text-foreground/40">
+              +{hiddenTechCount}
+            </span>
+          )}
         </div>
 
-        <div className="mt-auto flex items-center gap-4 pt-2 text-sm">
+        <div className="mt-auto flex items-center gap-4 border-t border-dashed border-neutral-200 pt-3 text-sm transition-colors duration-500 group-hover/card:border-neutral-300 dark:border-neutral-800 dark:group-hover/card:border-neutral-700">
           {project.live ? (
             <a
               href={project.live}
-              className="group/link inline-flex items-center gap-1.5 font-medium text-foreground/70 transition-colors hover:text-primary"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group/live relative z-20 inline-flex items-center gap-2 font-medium text-foreground/70 transition-colors hover:text-primary"
             >
-              <span className="size-1.5 animate-pulse rounded-full bg-green-500 shadow-[0_0_8px_2px_rgba(34,197,94,0.7)]" />
+              <span className="relative flex size-1.5">
+                <span className="absolute inline-flex size-full animate-ping rounded-full bg-emerald-400 opacity-70" />
+                <span className="relative inline-flex size-1.5 rounded-full bg-emerald-500" />
+              </span>
               Live
-              <span className="transition-transform duration-200 group-hover/link:translate-x-0.5">
+              <span className="transition-transform duration-300 group-hover/live:translate-x-0.5">
                 ↗
               </span>
             </a>
           ) : (
-            <span className="inline-flex items-center gap-1.5 font-medium text-foreground/70">
-              <span className="size-1.5 animate-pulse rounded-full bg-orange-500 shadow-[0_0_8px_2px_rgba(249,115,22,0.7)]" />
+            <span className="relative z-20 inline-flex items-center gap-2 font-medium text-foreground/70">
+              <span className="relative inline-flex size-1.5 rounded-full bg-amber-500 shadow-[0_0_8px_2px_rgba(245,158,11,0.45)]" />
               Building
             </span>
           )}
-          <span className="size-1 rounded-full bg-neutral-200 dark:bg-neutral-700" />
           <a
             href={project.github}
-            className="group/link inline-flex items-center gap-1 font-medium text-foreground/70 transition-colors hover:text-primary"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group/source relative z-20 ml-auto inline-flex items-center gap-1.5 font-mono text-[11px] uppercase tracking-widest text-foreground/50 transition-colors hover:text-primary"
           >
-            GitHub
-            <span className="transition-transform duration-200 group-hover/link:translate-x-0.5">
+            source
+            <span className="transition-transform duration-300 group-hover/source:translate-x-0.5">
               ↗
             </span>
           </a>
         </div>
       </div>
+
+      <a
+        href={destination}
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label={`Open ${project.title}`}
+        className="absolute inset-0 z-10"
+      />
     </article>
   );
 }
