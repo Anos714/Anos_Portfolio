@@ -1,14 +1,18 @@
+"use client";
+
+import { useState } from "react";
 import Image from "next/image";
 import { IconBadge } from "../IconBadge";
 import { TechIcon } from "../TechIcon";
+import { ProjectDialog } from "./ProjectDialog";
 import type { Project } from "@/data/projects";
 
 const VISIBLE_TECH = 4;
 
 export function ProjectCard({ project }: { project: Project }) {
+  const [isOpen, setIsOpen] = useState(false);
   const shownTech = project.tech.slice(0, VISIBLE_TECH);
   const hiddenTechCount = project.tech.length - shownTech.length;
-  const destination = project.live ?? project.github;
 
   return (
     <article className="group/card relative flex h-full flex-col overflow-hidden rounded-2xl bg-white/70 shadow-[0_1px_2px_rgba(10,10,10,0.04)] ring-1 ring-neutral-200/70 transition-[transform,box-shadow,background-color,ring-color] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-1.5 hover:bg-white hover:shadow-[0_30px_60px_-32px_rgba(10,10,10,0.35)] hover:ring-neutral-300/80 dark:bg-neutral-900/40 dark:shadow-none dark:ring-neutral-800/70 dark:hover:bg-neutral-900 dark:hover:shadow-[0_30px_60px_-32px_rgba(0,0,0,0.8)] dark:hover:ring-neutral-700/80">
@@ -32,9 +36,19 @@ export function ProjectCard({ project }: { project: Project }) {
           />
           <span
             aria-hidden
-            className="absolute bottom-3 right-3 grid size-8 translate-y-1.5 place-items-center rounded-full bg-white/90 text-[13px] text-neutral-900 opacity-0 shadow-sm backdrop-blur transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover/card:translate-y-0 group-hover/card:opacity-100"
+            className="absolute bottom-3 right-3 grid size-8 translate-y-1.5 place-items-center rounded-full bg-white/90 text-neutral-900 opacity-0 shadow-sm backdrop-blur transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover/card:translate-y-0 group-hover/card:opacity-100"
           >
-            ↗
+            <svg
+              viewBox="0 0 24 24"
+              className="size-3.5"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <path d="M9 3H5a2 2 0 0 0-2 2v4M15 3h4a2 2 0 0 1 2 2v4M9 21H5a2 2 0 0 1-2-2v-4M15 21h4a2 2 0 0 0 2-2v-4" />
+            </svg>
           </span>
         </div>
       )}
@@ -120,12 +134,19 @@ export function ProjectCard({ project }: { project: Project }) {
         </div>
       </div>
 
-      <a
-        href={destination}
-        target="_blank"
-        rel="noopener noreferrer"
-        aria-label={`Open ${project.title}`}
-        className="absolute inset-0 z-10"
+      <button
+        type="button"
+        onClick={() => setIsOpen(true)}
+        aria-haspopup="dialog"
+        aria-expanded={isOpen}
+        aria-label={`View details for ${project.title}`}
+        className="absolute inset-0 z-10 cursor-pointer"
+      />
+
+      <ProjectDialog
+        project={project}
+        open={isOpen}
+        onClose={() => setIsOpen(false)}
       />
     </article>
   );
