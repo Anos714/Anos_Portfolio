@@ -252,6 +252,8 @@ export const projects: Project[] = [
     title: "Soso",
     year: "2026",
     tech: ["Next.js", "React", "TypeScript", "Tailwind CSS", "Zustand"],
+    image: "/projects/soso.png",
+    logo: "/projects/soso.svg",
     description: [
       "Built a local-first card studio for developers and creators — 8 templates across code, terminal, repo, profile, quote, metric, changelog, and link, edited inline and exported at feed-perfect sizes with no account and no server-side card data.",
       "Engineered client-side export to PNG/JPEG/WebP/SVG from 720p through 4K with 8 aspect ratios plus custom ratios, 12 backgrounds, and 6 font pairs, keeping every draft in IndexedDB through lz-string and idb-keyval.",
