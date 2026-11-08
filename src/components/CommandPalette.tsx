@@ -15,8 +15,15 @@ import {
 } from "react";
 import { useRouter } from "next/navigation";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
-import { searchGroups, type SearchGroup, type SearchItem } from "@/data/search";
+import {
+  blogSearchItems,
+  searchGroups,
+  type SearchGroup,
+  type SearchItem,
+} from "@/data/search";
+import type { Blog } from "@/data/blogs";
 import { site } from "@/data/site";
+import { openCalBooking } from "@/lib/cal";
 import { cn } from "@/lib/utils";
 import { SearchIcon } from "./icons/SearchIcon";
 
@@ -49,18 +56,28 @@ function useModKey(): string | null {
   );
 }
 
-const actionItems: SearchItem[] = [
-  {
-    group: "Actions",
-    title: "Copy email address",
-    detail: site.email,
-    hint: "clipboard",
-    href: "",
-    external: false,
-    keywords: "copy email mail contact write",
-    action: "copy-email",
-  },
-];
+/**
+ * The blog feed is the only part of the index that cannot ship statically.
+ * Load it once per session and cache the promise so navigating between pages
+ * or remounting the provider never refetches it.
+ */
+let blogIndexPromise: Promise<SearchItem[]> | null = null;
+
+function loadBlogIndex(): Promise<SearchItem[]> {
+  if (!blogIndexPromise) {
+    blogIndexPromise = fetch("/api/blogs")
+      .then((res) => (res.ok ? res.json() : []))
+      .then((posts: unknown) =>
+        Array.isArray(posts) ? blogSearchItems(posts as Blog[]) : [],
+      )
+      .catch(() => {
+        // Allow a later open to retry instead of caching the failure.
+        blogIndexPromise = null;
+        return [];
+      });
+  }
+  return blogIndexPromise;
+}
 
 function GroupIcon({ group }: { group: SearchGroup }) {
   const shared = {
@@ -90,10 +107,33 @@ function GroupIcon({ group }: { group: SearchGroup }) {
           <circle cx="8" cy="17" r="2" />
         </svg>
       );
+    case "Blogs":
+      return (
+        <svg {...shared}>
+          <rect x="4" y="4.5" width="16" height="15" rx="2" />
+          <path d="M8 9h8M8 12.5h8M8 16h5" />
+        </svg>
+      );
+    case "Resume":
+      return (
+        <svg {...shared}>
+          <rect x="3.5" y="6" width="17" height="12" rx="2" />
+          <circle cx="8.5" cy="12" r="1.8" />
+          <path d="M5.5 16c.5-1.2 1.5-1.8 3-1.8s2.5.6 3 1.8" />
+          <path d="M14 11h4M14 14h3" />
+        </svg>
+      );
     case "Elsewhere":
       return (
         <svg {...shared}>
           <path d="M7 17 17 7M9 7h8v8" />
+        </svg>
+      );
+    case "Inspiration":
+      return (
+        <svg {...shared}>
+          <path d="M12 3.5l1.6 4.4 4.4 1.6-4.4 1.6L12 15.5l-1.6-4.4L6 9.5l4.4-1.6z" />
+          <path d="M18 15.5l.7 1.8 1.8.7-1.8.7-.7 1.8-.7-1.8-1.8-.7 1.8-.7z" />
         </svg>
       );
     case "Actions":
@@ -126,6 +166,36 @@ function ModKeyChip() {
   const mod = useModKey();
   if (!mod) return <span aria-hidden className="inline-block w-4" />;
   return <Kbd>{mod}</Kbd>;
+}
+
+function escapeRegExp(value: string) {
+  return value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}
+
+/** Bolds the parts of a title that the current query matched. */
+function Highlighted({ text, query }: { text: string; query: string }) {
+  const tokens = query.split(/\s+/).filter((token) => token.length > 1);
+  if (tokens.length === 0) return <>{text}</>;
+
+  const matcher = new RegExp(`(${tokens.map(escapeRegExp).join("|")})`, "gi");
+  const lowered = new Set(tokens.map((token) => token.toLowerCase()));
+
+  return (
+    <>
+      {text.split(matcher).map((part, index) =>
+        lowered.has(part.toLowerCase()) ? (
+          <mark
+            key={index}
+            className="bg-transparent font-semibold text-foreground"
+          >
+            {part}
+          </mark>
+        ) : (
+          <span key={index}>{part}</span>
+        ),
+      )}
+    </>
+  );
 }
 
 export function CommandTrigger({ className = "" }: { className?: string }) {
@@ -177,6 +247,7 @@ export function CommandPaletteProvider({ children }: { children: ReactNode }) {
   const [query, setQuery] = useState("");
   const [active, setActive] = useState(0);
   const [copied, setCopied] = useState(false);
+  const [blogItems, setBlogItems] = useState<SearchItem[]>([]);
 
   const deferred = useDeferredValue(query.trim().toLowerCase());
   const inputRef = useRef<HTMLInputElement>(null);
@@ -204,6 +275,18 @@ export function CommandPaletteProvider({ children }: { children: ReactNode }) {
     return () => document.removeEventListener("keydown", onKeyDown);
   }, [isOpen, open, close]);
 
+  // Prefetch the blog index while the page idles so "blog" queries have
+  // nothing to wait for by the time the palette is opened.
+  useEffect(() => {
+    let cancelled = false;
+    loadBlogIndex().then((items) => {
+      if (!cancelled) setBlogItems(items);
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
   // Focus, scroll lock, and handing focus back are DOM concerns, so they
   // belong to the open/close transition rather than to the handlers.
   useEffect(() => {
@@ -219,35 +302,45 @@ export function CommandPaletteProvider({ children }: { children: ReactNode }) {
     };
   }, [isOpen]);
 
-  const groups = useMemo(() => {
-    const found = searchGroups(deferred);
-    const tokens = deferred.split(/\s+/).filter(Boolean);
-    const actions =
-      tokens.length === 0 ||
-      actionItems.some((a) =>
-        tokens.every((t) => `${a.title} ${a.keywords}`.toLowerCase().includes(t)),
-      )
-        ? [{ group: "Actions" as const, items: actionItems }]
-        : [];
+  const sections = useMemo(
+    () => searchGroups(deferred, blogItems),
+    [deferred, blogItems],
+  );
 
-    let i = -1;
-    return [...found, ...actions].map((section) => ({
-      group: section.group,
-      items: section.items.map((item) => ({ item, index: (i += 1) })),
-    }));
-  }, [deferred]);
+  const flat = useMemo(
+    () => sections.flatMap((section) => section.items),
+    [sections],
+  );
 
-  const flat = useMemo(() => groups.flatMap((g) => g.items.map((e) => e.item)), [groups]);
+  // Map identity → flat position instead of mutating a counter inside a memo
+  // (the React compiler forbids reassigning after render).
+  const indexOf = useMemo(
+    () => new Map(flat.map((item, index) => [item, index])),
+    [flat],
+  );
 
-  // A shorter result list can leave the cursor past the end; clamping here
-  // avoids a second render just to correct it.
-  const current = active < flat.length ? active : 0;
+  // A shorter result list can leave the cursor past the end; clamp to the
+  // last item instead of snapping back to the top mid-navigation.
+  const current = flat.length > 0 ? Math.min(active, flat.length - 1) : 0;
 
+  // Scroll the result list on its own. `scrollIntoView` walks every scrollable
+  // ancestor — including the document — which is what made keyboard
+  // navigation flicker and jump the page around.
   useEffect(() => {
-    listRef.current
-      ?.querySelector(`[data-index="${current}"]`)
-      ?.scrollIntoView({ block: "nearest" });
-  }, [current]);
+    const list = listRef.current;
+    const el = list?.querySelector<HTMLElement>(`[data-index="${current}"]`);
+    if (!list || !el) return;
+
+    const listRect = list.getBoundingClientRect();
+    const itemRect = el.getBoundingClientRect();
+    const pad = 6;
+
+    if (itemRect.top < listRect.top + pad) {
+      list.scrollTop -= listRect.top + pad - itemRect.top;
+    } else if (itemRect.bottom > listRect.bottom - pad) {
+      list.scrollTop += itemRect.bottom - (listRect.bottom - pad);
+    }
+  }, [current, sections]);
 
   const select = useCallback(
     (item: SearchItem) => {
@@ -256,6 +349,12 @@ export function CommandPaletteProvider({ children }: { children: ReactNode }) {
           ?.writeText(site.email)
           .then(() => setCopied(true))
           .catch(() => setCopied(false));
+        return;
+      }
+
+      if (item.action === "book-call") {
+        close();
+        void openCalBooking();
         return;
       }
 
@@ -286,10 +385,12 @@ export function CommandPaletteProvider({ children }: { children: ReactNode }) {
 
     if (event.key === "ArrowDown" || (event.key === "n" && event.ctrlKey)) {
       event.preventDefault();
-      setActive((i) => (i + 1) % flat.length);
+      setActive((i) => (Math.min(i, flat.length - 1) + 1) % flat.length);
     } else if (event.key === "ArrowUp" || (event.key === "p" && event.ctrlKey)) {
       event.preventDefault();
-      setActive((i) => (i - 1 + flat.length) % flat.length);
+      setActive(
+        (i) => (Math.min(i, flat.length - 1) - 1 + flat.length) % flat.length,
+      );
     } else if (event.key === "Home") {
       event.preventDefault();
       setActive(0);
@@ -348,17 +449,20 @@ export function CommandPaletteProvider({ children }: { children: ReactNode }) {
                   onChange={(event) => {
                     setQuery(event.target.value);
                     setActive(0);
+                    if (listRef.current) listRef.current.scrollTop = 0;
                   }}
-                  placeholder="Search pages, projects, tools…"
+                  placeholder="Search pages, projects, blogs, resume…"
                   aria-label="Search"
                   role="combobox"
                   aria-expanded
                   aria-controls="command-list"
+                  aria-autocomplete="list"
                   aria-activedescendant={
                     flat.length > 0 ? `command-option-${current}` : undefined
                   }
                   autoComplete="off"
                   spellCheck={false}
+                  enterKeyHint="go"
                   className="min-w-0 flex-1 bg-transparent font-mono text-sm text-foreground outline-none placeholder:text-foreground/30"
                 />
                 {copied && (
@@ -376,61 +480,83 @@ export function CommandPaletteProvider({ children }: { children: ReactNode }) {
                 </button>
               </div>
 
+              <span className="sr-only" role="status" aria-live="polite">
+                {flat.length} {flat.length === 1 ? "result" : "results"}
+              </span>
+
               <div
                 ref={listRef}
                 id="command-list"
                 role="listbox"
                 aria-label="Results"
-                className="max-h-[52vh] overflow-y-auto px-2 py-2"
+                className="max-h-[52vh] overflow-y-auto overscroll-contain px-2 py-2"
               >
                 {flat.length === 0 ? (
                   <p className="px-3 py-8 text-center text-sm text-foreground/50">
                     Nothing matches “{query.trim()}”.
+                    <span className="mt-1.5 block text-xs text-foreground/35">
+                      Try “blogs”, “resume”, “book a call”, or “email”.
+                    </span>
                   </p>
                 ) : (
-                  groups.map((section) => (
+                  sections.map((section) => (
                     <div key={section.group} className="pb-1 last:pb-0">
                       <p className="px-3 pb-1 pt-2 font-mono text-[10px] uppercase tracking-wide text-foreground/40">
                         {section.group}
                       </p>
-                      {section.items.map(({ item, index }) => (
-                        <button
-                          key={`${item.group}-${item.title}`}
-                          id={`command-option-${index}`}
-                          data-index={index}
-                          type="button"
-                          role="option"
-                          aria-selected={current === index}
-                          onMouseEnter={() => setActive(index)}
-                          onClick={() => select(item)}
-                          className={cn(
-                            "flex w-full items-center gap-3 rounded-lg px-3 py-2 text-left transition-colors duration-150",
-                            current === index
-                              ? "bg-neutral-100 text-foreground dark:bg-neutral-800"
-                              : "text-foreground/70",
-                          )}
-                        >
-                          <span
+                      {section.items.map((item) => {
+                        const index = indexOf.get(item) ?? 0;
+                        return (
+                          <button
+                            key={`${item.group}-${item.title}`}
+                            id={`command-option-${index}`}
+                            data-index={index}
+                            type="button"
+                            role="option"
+                            aria-selected={current === index}
+                            onPointerMove={(event) => {
+                              // Only a real mouse move should steal the cursor
+                              // from the keyboard. Scrolling under a resting
+                              // pointer fires enter/over events, which is what
+                              // made arrow navigation bounce around.
+                              if (event.pointerType !== "mouse") return;
+                              if (current !== index) setActive(index);
+                            }}
+                            onClick={() => select(item)}
                             className={cn(
-                              "shrink-0 transition-colors",
+                              "flex w-full items-center gap-3 rounded-lg px-3 py-2 text-left transition-colors duration-150",
                               current === index
-                                ? "text-foreground"
-                                : "text-foreground/40",
+                                ? "bg-neutral-100 text-foreground dark:bg-neutral-800"
+                                : "text-foreground/70",
                             )}
                           >
-                            <GroupIcon group={item.group} />
-                          </span>
-                          <span className="flex min-w-0 flex-col">
-                            <span className="truncate text-sm">{item.title}</span>
-                            <span className="truncate text-xs text-foreground/40">
-                              {item.detail}
+                            <span
+                              className={cn(
+                                "shrink-0 transition-colors",
+                                current === index
+                                  ? "text-foreground"
+                                  : "text-foreground/40",
+                              )}
+                            >
+                              <GroupIcon group={item.group} />
                             </span>
-                          </span>
-                          <span className="ml-auto shrink-0 font-mono text-[11px] text-foreground/40">
-                            {item.hint}
-                          </span>
-                        </button>
-                      ))}
+                            <span className="flex min-w-0 flex-col">
+                              <span className="truncate text-sm">
+                                <Highlighted
+                                  text={item.title}
+                                  query={deferred}
+                                />
+                              </span>
+                              <span className="truncate text-xs text-foreground/40">
+                                {item.detail}
+                              </span>
+                            </span>
+                            <span className="ml-auto shrink-0 font-mono text-[11px] text-foreground/40">
+                              {item.hint}
+                            </span>
+                          </button>
+                        );
+                      })}
                     </div>
                   ))
                 )}
