@@ -2,6 +2,7 @@ import { getTech } from "./tech";
 
 export const experience = {
   role: "Full Stack Developer",
+  roleIcon: "Full Stack",
   type: "Freelance",
   duration: "2023 – Present",
   location: "Self-Employed",
