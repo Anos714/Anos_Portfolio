@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, type Variants } from "framer-motion";
-import { socials } from "@/data/site";
+import { site, socials } from "@/data/site";
 import { LinkPreview } from "../LinkPreview";
 import { DottedLink } from "../DottedLink";
 import { VisitorCount } from "../VisitorCount";
@@ -83,7 +83,12 @@ export function HeroSection() {
           else,{" "}
           {mail && (
             <DottedLink href={mail.href}>{mail.label}</DottedLink>
-          )}.
+          )}{" "}
+          me or{" "}
+          <DottedLink href={site.cal} target="_blank" rel="noopener noreferrer">
+            book a call
+          </DottedLink>
+          .
         </motion.p>
 
         <motion.div
