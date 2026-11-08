@@ -4,7 +4,7 @@ import { Reveal } from "../Reveal";
 import { ProjectCard } from "../project/ProjectCard";
 import { SeeMoreLink } from "../SeeMoreLink";
 
-const PREVIEW_COUNT = 4;
+const PREVIEW_COUNT = 5;
 
 export function ProjectsSection() {
   const preview = projects.slice(0, PREVIEW_COUNT);
@@ -18,8 +18,12 @@ export function ProjectsSection() {
 
       <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
         {preview.map((project, i) => (
-          <Reveal key={project.title} delay={i * 0.06}>
-            <ProjectCard project={project} />
+          <Reveal
+            key={project.title}
+            delay={i * 0.06}
+            className={i === 0 ? "md:col-span-2" : undefined}
+          >
+            <ProjectCard project={project} featured={i === 0} />
           </Reveal>
         ))}
       </div>
