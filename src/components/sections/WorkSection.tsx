@@ -17,7 +17,7 @@ export function WorkSection() {
         <div className="flex flex-col gap-3">
           <div className="flex items-center gap-2">
             <div className="transition-transform duration-300 hover:-rotate-6 hover:scale-110">
-              <IconBadge name={experience.tech[0]} />
+              <IconBadge name={experience.roleIcon} />
             </div>
             <p className="font-medium text-foreground">{experience.role}</p>
             <span className="hidden size-1 rounded-full bg-neutral-200 md:block dark:bg-neutral-700" />

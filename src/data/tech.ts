@@ -43,6 +43,7 @@ export const techIcons: Record<string, string> = {
   Neon: "/tech/neon.svg",
   Upstash: "/tech/upstash.svg",
   Vercel: "/tech/vercel.svg",
+  "Full Stack": "/tech/full-stack.svg",
 };
 
 export function getTech(name: string): Tech {
