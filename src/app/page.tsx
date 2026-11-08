@@ -10,6 +10,7 @@ import { GuestbookSection } from "@/components/sections/GuestbookSection";
 import { QuotesSection } from "@/components/sections/QuotesSection";
 import { Footer } from "@/components/Footer";
 import { PersonJsonLd } from "@/components/PersonJsonLd";
+import { PlayfulGutter } from "@/components/playful/PlayfulGutter";
 
 export default function Home() {
   return (
@@ -18,6 +19,7 @@ export default function Home() {
       <Navbar />
 
       <main>
+        <PlayfulGutter />
         <div className="mx-auto max-w-2xl px-4 pb-10">
           <HeroSection />
 
