@@ -131,6 +131,28 @@ body {
   }
 }
 
+/* Playful gutter doodles: a lazy blink and a slow orbit. */
+@keyframes doodle-blink {
+  0%,
+  92%,
+  100% {
+    transform: scaleY(1);
+  }
+  95% {
+    transform: scaleY(0.1);
+  }
+}
+
+@keyframes doodle-sway {
+  0%,
+  100% {
+    transform: rotate(-2.5deg);
+  }
+  50% {
+    transform: rotate(2.5deg);
+  }
+}
+
 /* Dotted rule that sweeps in under a card title while the card is hovered.
    The inline `from` value wins over the stylesheet, so this needs !important. */
 .group:hover .dotted-underline--sweep {
@@ -141,6 +163,10 @@ body {
   .project-ribbon,
   .project-ribbon::after {
     animation: none;
+  }
+
+  [style*="doodle-blink"] {
+    animation: none !important;
   }
 
   html {
