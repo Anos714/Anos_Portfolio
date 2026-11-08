@@ -7,7 +7,14 @@ export const site = {
   location: "Alwar, Rajasthan, India",
   email: "sainrahul374@gmail.com",
   phone: "+91-9602958067",
+  /** Public Cal.com event — opens the booking widget. */
+  cal: "https://cal.com/rahul-sain-bgnqtj/got-a-project-in-mind",
+  calLink: "rahul-sain-bgnqtj/got-a-project-in-mind",
 };
+
+/** Google Drive preview of the latest resume, embedded on /resume. */
+export const resumeUrl =
+  "https://drive.google.com/file/d/16mgc9bf97b-KXsSN9cWcnDr6NNi_uVQK/preview";
 
 export const socials = [
   {

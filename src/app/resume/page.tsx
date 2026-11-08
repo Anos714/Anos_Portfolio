@@ -4,6 +4,7 @@ import { SectionHeading } from "@/components/SectionHeading";
 import { Reveal } from "@/components/Reveal";
 import { DottedLink } from "@/components/DottedLink";
 import { Footer } from "@/components/Footer";
+import { resumeUrl } from "@/data/site";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -13,8 +14,7 @@ export const metadata: Metadata = {
   alternates: { canonical: "/resume" },
 };
 
-const RESUME_PREVIEW_URL =
-  "https://drive.google.com/file/d/16mgc9bf97b-KXsSN9cWcnDr6NNi_uVQK/preview";
+const RESUME_PREVIEW_URL = resumeUrl;
 
 export default function ResumePage() {
   return (
