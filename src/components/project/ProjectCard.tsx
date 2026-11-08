@@ -80,15 +80,18 @@ export function ProjectCard({
           />
 
           {project.badge && (
-            /* A true corner ribbon: the triangle is clipped by the card's
-               rounded corner, so both ends meet the top and right edges
-               cleanly instead of being cut off mid-image. */
-            <span className="pointer-events-none absolute right-0 top-0 z-10 block size-[130px]">
+            /* A diagonal ribbon band across the corner: both long edges stay
+               parallel and the ends are cut by the card's top and right
+               edges, so it reads as a ribbon rather than a corner triangle. */
+            <span className="pointer-events-none absolute inset-0 z-10 overflow-hidden">
               <span
-                className="project-ribbon absolute inset-0 block"
-                style={{ clipPath: "polygon(0 0, 100% 0, 100% 100%)" }}
+                className="project-ribbon absolute right-0 top-0 flex h-[34px] w-[320px] items-center justify-center whitespace-nowrap text-[10.5px] font-semibold tracking-wide text-neutral-900"
+                style={{
+                  transform:
+                    "translate(calc(50% - 46px), calc(-50% + 46px)) rotate(45deg)",
+                }}
               >
-                <span className="absolute left-[57.5%] top-[42.5%] flex -translate-x-1/2 -translate-y-1/2 rotate-45 items-center gap-1.5 whitespace-nowrap text-[10.5px] font-semibold tracking-wide text-neutral-900">
+                <span className="relative z-10 inline-flex items-center gap-1.5">
                   <span
                     aria-hidden="true"
                     className="inline-block size-1.5 rounded-full bg-emerald-700"
