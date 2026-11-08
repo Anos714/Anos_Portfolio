@@ -85,13 +85,13 @@ export function ProjectCard({
                edges, so it reads as a ribbon rather than a corner triangle. */
             <span className="pointer-events-none absolute inset-0 z-10 overflow-hidden">
               <span
-                className="project-ribbon absolute right-0 top-0 flex h-[34px] w-[320px] items-center justify-center whitespace-nowrap text-[10.5px] font-semibold tracking-wide text-neutral-900"
+                className="project-ribbon absolute right-0 top-0 flex h-[30px] w-[320px] items-center justify-center whitespace-nowrap text-[9px] font-semibold tracking-wide text-neutral-900"
                 style={{
                   transform:
-                    "translate(calc(50% - 46px), calc(-50% + 46px)) rotate(45deg)",
+                    "translate(calc(50% - 30px), calc(-50% + 43px)) rotate(35deg)",
                 }}
               >
-                <span className="relative z-10 inline-flex items-center gap-1.5">
+                <span className="relative z-10 inline-flex -translate-x-[19px] translate-y-[5px] items-center gap-1.5">
                   <span
                     aria-hidden="true"
                     className="inline-block size-1.5 rounded-full bg-emerald-700"
