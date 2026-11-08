@@ -72,7 +72,77 @@ body {
   --mask-from: 0%;
 }
 
+/* Cursor-following highlight that rides the edge of a project card.
+   The mask keeps only the 1px padding ring visible. */
+.card-ring-glow {
+  background: radial-gradient(
+    380px circle at var(--spot-x, 50%) var(--spot-y, 50%),
+    rgb(0 0 0 / 0.5),
+    transparent 70%
+  );
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  mask-composite: exclude;
+}
+
+.dark .card-ring-glow {
+  background: radial-gradient(
+    380px circle at var(--spot-x, 50%) var(--spot-y, 50%),
+    rgb(255 255 255 / 0.55),
+    transparent 70%
+  );
+}
+
+/* Project ribbon: a flat amber corner band with a soft sheen that sweeps
+   across. The triangle is clipped by the card, so no shadow can escape. */
+.project-ribbon {
+  background-color: #f7c948;
+}
+
+.project-ribbon::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background-image: linear-gradient(
+    105deg,
+    transparent 38%,
+    rgb(255 255 255 / 0.45) 50%,
+    transparent 62%
+  );
+  background-size: 260% 100%;
+  background-position: 160% 0;
+  animation: ribbon-sheen 7s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes ribbon-sheen {
+  0%,
+  45% {
+    background-position: 160% 0;
+  }
+  100% {
+    background-position: -60% 0;
+  }
+}
+
+/* Dotted rule that sweeps in under a card title while the card is hovered.
+   The inline `from` value wins over the stylesheet, so this needs !important. */
+.group:hover .dotted-underline--sweep {
+  --mask-from: 0% !important;
+}
+
 @media (prefers-reduced-motion: reduce) {
+  .project-ribbon,
+  .project-ribbon::after {
+    animation: none;
+  }
+
   html {
     scroll-behavior: auto;
   }
