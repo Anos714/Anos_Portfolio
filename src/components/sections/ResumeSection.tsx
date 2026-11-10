@@ -20,6 +20,9 @@ export function ResumeSection() {
           <p className="text-sm text-foreground/50">
             {site.location} · {site.phone}
           </p>
+          <p className="text-sm text-foreground/50">
+            {site.availability} · {site.languages}
+          </p>
         </div>
       </Reveal>
 
@@ -32,6 +35,9 @@ export function ResumeSection() {
             <p className="font-medium text-foreground">{education.degree}</p>
             <p className="text-sm text-foreground/70">
               {education.university}, {education.location} · {education.duration}
+            </p>
+            <p className="text-sm text-foreground/60">
+              Coursework: {education.coursework.join(", ")}
             </p>
           </div>
         </Reveal>

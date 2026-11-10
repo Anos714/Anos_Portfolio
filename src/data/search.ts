@@ -2,7 +2,7 @@ import { navLinks, socials, site, education, resumeUrl } from "./site";
 import { projects } from "./projects";
 import { tools } from "./tools";
 import { inspirations } from "./inspiration";
-import { experience } from "./experience";
+import { experiences } from "./experience";
 import { blogUrl, type Blog } from "./blogs";
 
 export type SearchGroup =
@@ -82,7 +82,7 @@ const resumeItems: SearchItem[] = [
     hint: "open ↗",
     href: resumeUrl,
     external: true,
-    keywords: "cv curriculum vitae drive download print file",
+    keywords: "cv curriculum vitae pdf download print file",
   },
   {
     group: "Resume",
@@ -96,11 +96,20 @@ const resumeItems: SearchItem[] = [
   {
     group: "Resume",
     title: "Experience",
-    detail: `${experience.role} · ${experience.type} · ${experience.duration}`,
+    detail: `${experiences[0].role} · ${experiences[0].type} · ${experiences[0].duration}`,
     hint: "/work",
     href: "/work",
     external: false,
     keywords: "job work freelance career employment role company",
+  },
+  {
+    group: "Resume",
+    title: "Internship",
+    detail: `${experiences[1].role} · ${experiences[1].location.split(" · ")[0]} · ${experiences[1].duration}`,
+    hint: "/work",
+    href: "/work",
+    external: false,
+    keywords: "intern internship python onlei remote data automation",
   },
   {
     group: "Resume",
@@ -110,7 +119,7 @@ const resumeItems: SearchItem[] = [
     href: "/work",
     external: false,
     keywords:
-      "tech stack languages frameworks tools backend frontend java javascript typescript sql docker redis",
+      "tech stack languages frameworks tools backend frontend python javascript typescript sql docker redis aws playwright ai llm gemini",
   },
 ];
 

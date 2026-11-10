@@ -4,8 +4,8 @@ import React from "react";
 import { cn } from "@/lib/utils";
 
 const DEFAULT_WORDS = [
-  "Software Developer",
   "Full Stack Developer",
+  "Software Developer",
   "Backend Developer",
   "AI Engineer",
   "SaaS Builder",
