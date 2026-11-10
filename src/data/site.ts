@@ -1,10 +1,12 @@
 export const site = {
   name: "Rahul Sain",
-  aka: "Software Developer",
-  title: "Software Developer — Full Stack Developer",
+  aka: "Full Stack Developer",
+  title: "Full Stack Developer — React, Node.js, TypeScript, PostgreSQL",
   summary:
-    "Computer Science undergraduate with hands-on experience building AI-powered SaaS and full-stack web applications. Skilled in Java, JavaScript, TypeScript, SQL, REST APIs, Docker, CI/CD, and scalable backend development using modern microservices, distributed queues, and edge runtimes.",
+    "Full stack developer with 3+ years of experience shipping production web apps and AI products end to end. Strong in React, Next.js, TypeScript, Node.js, Express, PostgreSQL and MongoDB, with hands-on Redis, Docker, AWS and LLM integration. Ships a feature from schema design to deployment and debugs it in production.",
   location: "Alwar, Rajasthan, India",
+  availability: "Open to remote or relocation · Immediate joiner",
+  languages: "English, Hindi",
   email: "sainrahul374@gmail.com",
   phone: "+91-9602958067",
   /** Public Cal.com event — opens the booking widget. */
@@ -12,9 +14,8 @@ export const site = {
   calLink: "rahul-sain-bgnqtj/got-a-project-in-mind",
 };
 
-/** Google Drive preview of the latest resume, embedded on /resume. */
-export const resumeUrl =
-  "https://drive.google.com/file/d/16mgc9bf97b-KXsSN9cWcnDr6NNi_uVQK/preview";
+/** Latest resume PDF hosted with the site, embedded on /resume. */
+export const resumeUrl = "/resume/rahul-sain-resume.pdf";
 
 export const socials = [
   {
@@ -60,12 +61,19 @@ export const education = {
   university: "Lords University",
   location: "Alwar, Rajasthan",
   duration: "Expected May 2027",
+  coursework: [
+    "Data Structures and Algorithms",
+    "System Design",
+    "DBMS",
+    "Operating Systems",
+    "Computer Networks",
+  ],
 };
 
 export const highlights = [
-  "Built and deployed production-ready full-stack applications with OAuth/RBAC, dashboards, microservices, and distributed async processing.",
-  "Hands-on experience integrating AI workflows (Gemini API, structured output parsing) and background job queues (Redis, BullMQ).",
-  "Strong grasp of clean architecture, relational database indexing, STLC practices, manual API testing, and edge deployment.",
+  "3+ years shipping production web apps and AI products end to end — from schema design to deployment and production debugging.",
+  "Strong in React, Next.js, TypeScript, Node.js, Express, PostgreSQL and MongoDB, with hands-on Redis, Docker, AWS and LLM integration.",
+  "Built AI features that turn prompts into structured JSON with retry and provider fallback, plus auth, RBAC and Playwright test coverage.",
 ];
 
 export const navLinks = [

@@ -47,7 +47,9 @@ const keywords = [
   "Hono",
   "Drizzle ORM",
   "Gemini AI",
-  "Java developer",
+  "Python developer",
+  "AWS",
+  "Playwright",
   "India software developer",
   "freelance full stack developer",
 ];

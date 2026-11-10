@@ -23,9 +23,15 @@ export function DottedLink({
     </span>
   );
 
-  // Internal links go through next/link for client-side navigation —
-  // a raw <a> would trigger a full page reload.
-  if (typeof href === "string" && href.startsWith("/")) {
+  // Internal routes go through next/link for client-side navigation. Static
+  // files (e.g. the resume PDF) stay as plain anchors so Next doesn't prefetch
+  // them, and so the download attribute works.
+  const isInternalRoute =
+    typeof href === "string" &&
+    href.startsWith("/") &&
+    !/\.[a-z0-9]+$/i.test(href);
+
+  if (isInternalRoute) {
     return (
       <Link href={href} className={classes} {...props}>
         {content}

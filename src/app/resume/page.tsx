@@ -4,13 +4,13 @@ import { SectionHeading } from "@/components/SectionHeading";
 import { Reveal } from "@/components/Reveal";
 import { DottedLink } from "@/components/DottedLink";
 import { Footer } from "@/components/Footer";
-import { resumeUrl } from "@/data/site";
+import { resumeUrl, site } from "@/data/site";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Resume",
   description:
-    "The resume of Rahul Sain — Full Stack Developer specializing in AI-powered SaaS products. Education, highlights, and full tech stack.",
+    "The resume of Rahul Sain — Full Stack Developer with 3+ years of experience in React, Node.js, TypeScript, PostgreSQL, and AI-powered products.",
   alternates: { canonical: "/resume" },
 };
 
@@ -30,16 +30,22 @@ export default function ResumePage() {
 
           <Reveal delay={0.05}>
             <p className="mt-6 text-sm text-foreground/60">
-              My latest resume is embedded below. If it doesn&apos;t load, you
-              can{" "}
+              My latest resume is embedded below. You can also{" "}
               <DottedLink
                 href={RESUME_PREVIEW_URL}
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                open it directly
+                open it in a new tab
+              </DottedLink>{" "}
+              or{" "}
+              <DottedLink href={RESUME_PREVIEW_URL} download>
+                download the PDF
               </DottedLink>
               .
+            </p>
+            <p className="mt-2 text-sm text-foreground/50">
+              {site.availability} · {site.languages}
             </p>
           </Reveal>
 
