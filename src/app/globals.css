@@ -39,6 +39,10 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
+.font-signature {
+  font-family: var(--font-signature), cursive;
+}
+
 ::selection {
   background: var(--foreground);
   color: var(--background);

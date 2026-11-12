@@ -1,10 +1,14 @@
 import { footerLinks } from "@/data/site";
 import { LinkPreview } from "./LinkPreview";
+import { Signature } from "./Signature";
+import { FooterSocials } from "./FooterSocials";
 
 export function Footer() {
   return (
     <footer className="mx-auto mt-auto w-full max-w-2xl px-4 pb-20 pt-10">
-      <div className="flex flex-col items-center gap-4">
+      <div className="flex flex-col items-center gap-6">
+        <Signature />
+        <FooterSocials />
         <p className="max-w-md text-center text-sm leading-relaxed text-foreground/60">
           Built by yours truly. Here&apos;s the{" "}
           <LinkPreview url={footerLinks.code.href}>
