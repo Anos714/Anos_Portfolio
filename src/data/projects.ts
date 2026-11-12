@@ -75,7 +75,7 @@ export const projects: Project[] = [
     ],
     image: "/projects/stackit.jpg",
     logo: "/projects/stackit.svg",
-    badge: "90+ npm downloads",
+    badge: "343 weekly npm downloads",
     description: [
       "Built an opinionated full-stack scaffolder CLI, published as create-stackit-app on npm, that generates best-practice monorepos for MERN, PERN, Hono + Postgres, and Go + Fiber stacks in a single command with stack, language, runtime, and package-manager flags.",
       "Every generated repo ships request validation, Docker Compose with a live /api/health endpoint, docs, and versioned template registry, backed by 13 CLI tests covering semver, registry, and scaffold file-maps.",
@@ -228,7 +228,7 @@ export const projects: Project[] = [
     tech: ["Next.js", "TypeScript", "React", "Tailwind CSS"],
     image: "/projects/kilosmith.png",
     logo: "/projects/kilosmith.svg",
-    badge: "10+ users",
+    badge: "15+ users",
     description: [
       "Built a browser-only image and video workshop — eight tools for resize, crop, compress, convert, video trim, GIF, meme, and favicon packs — with no upload endpoint, account, watermark, or file limit.",
       "Engineered the encode pipeline inside the tab: WebCodecs re-encodes MP4/MOV with trim, bitrate and resolution caps, and AAC with an Opus fallback, plus batch JPEG/PNG/WebP/AVIF conversion that keeps alpha where the format allows.",

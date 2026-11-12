@@ -44,33 +44,26 @@ export function HeroSection() {
           variants={item}
           className="leading-relaxed text-foreground/80"
         >
-          I&apos;m a{" "}
-          <span className="font-medium text-foreground">software developer</span>{" "}
-          at heart, building{" "}
+          I build{" "}
           <span className="font-medium text-foreground">
-            AI-powered SaaS and full-stack web applications
-          </span>
-          . I&apos;m mostly active on{" "}
-          {x && (
-            <LinkPreview url={x.href}>{x.label}</LinkPreview>
-          )}{" "}
-          and{" "}
-          {li && <LinkPreview url={li.href}>{li.label}</LinkPreview>}
-          , where I share what I&apos;m building and learning.
+            AI-powered SaaS and full-stack web apps
+          </span>{" "}
+          with Next.js, React, Node.js, Bun, and TypeScript. I share what I
+          ship on{" "}
+          {x && <LinkPreview url={x.href}>{x.label}</LinkPreview>} and{" "}
+          {li && <LinkPreview url={li.href}>{li.label}</LinkPreview>}.
         </motion.p>
 
         <motion.p
           variants={item}
           className="leading-relaxed text-foreground/80"
         >
-          I work across{" "}
-          <span className="font-medium text-foreground">
-            Next.js, React.js, Node.js, Bun.js and TypeScript
-          </span>
-          , and I love shipping tools with real product thinking — from an
-          autonomous Twitter growth engine to an ultra-fast blogging platform
-          and a real-time social app. You can browse my{" "}
-          <DottedLink href="/projects">projects</DottedLink>, check my{" "}
+          Recent work includes{" "}
+          <span className="font-medium text-foreground">stackit</span> (343
+          weekly npm downloads),{" "}
+          <span className="font-medium text-foreground">Kilosmith</span> (15+
+          users), Xcel, and Inkwell. Browse my{" "}
+          <DottedLink href="/projects">projects</DottedLink>, see my{" "}
           <DottedLink href="/work">work</DottedLink>, or grab my{" "}
           <DottedLink href="/resume">resume</DottedLink>.
         </motion.p>
@@ -79,9 +72,8 @@ export function HeroSection() {
           variants={item}
           className="leading-relaxed text-foreground/80"
         >
-          I&apos;m currently open to full-stack opportunities where I can keep
-          learning, shipping, and solving practical problems. For anything
-          else,{" "}
+          I&apos;m open to full-stack roles where I can ship real products and
+          learn from the team.{" "}
           {mail && (
             <DottedLink href={mail.href}>{mail.label}</DottedLink>
           )}{" "}
