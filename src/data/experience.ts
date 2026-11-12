@@ -40,7 +40,7 @@ export const experiences: Experience[] = [
     type: "Internship",
     duration: "Jun 2024 – Aug 2024",
     location: "ONLEI Technologies · Remote, India",
-    tech: ["Python"],
+    tech: ["Python", "Bash", "Shell scripting", "Automation", "Linux"],
     description: [
       "Wrote and maintained Python scripts for data handling and basic automation, with documented code the team could run without a walkthrough.",
       "Returned for a second internship in 2025 with the same team for data-handling and automation work.",
