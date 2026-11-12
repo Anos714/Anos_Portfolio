@@ -28,6 +28,7 @@ export function HeroSection() {
   const x = linkOf("X / Twitter");
   const li = linkOf("LinkedIn");
   const gh = linkOf("GitHub");
+  const medium = linkOf("Medium");
   const mail = linkOf("Email");
 
   return (
@@ -101,6 +102,8 @@ export function HeroSection() {
           {li && <LinkPreview url={li.href}>{li.label}</LinkPreview>}
           <span className="text-foreground/30">·</span>
           {x && <LinkPreview url={x.href}>{x.label}</LinkPreview>}
+          <span className="text-foreground/30">·</span>
+          {medium && <LinkPreview url={medium.href}>{medium.label}</LinkPreview>}
         </motion.div>
 
         <motion.div

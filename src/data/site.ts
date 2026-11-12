@@ -46,6 +46,15 @@ export const socials = [
     },
   },
   {
+    label: "Medium",
+    href: "https://medium.com/@rahulxcode",
+    preview: {
+      title: "Rahul Sain – Medium",
+      domain: "medium.com",
+      icon: "M",
+    },
+  },
+  {
     label: "Email",
     href: "mailto:sainrahul374@gmail.com",
     preview: {
