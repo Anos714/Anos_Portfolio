@@ -1,5 +1,11 @@
 import type { Metadata } from "next";
-import { Inter, Schibsted_Grotesk, JetBrains_Mono, Instrument_Serif } from "next/font/google";
+import {
+  Inter,
+  Schibsted_Grotesk,
+  JetBrains_Mono,
+  Instrument_Serif,
+  Dancing_Script,
+} from "next/font/google";
 import { site } from "@/data/site";
 import { siteUrl } from "@/lib/site";
 import { Analytics } from "@vercel/analytics/next";
@@ -26,6 +32,13 @@ const instrumentSerif = Instrument_Serif({
   variable: "--font-serif",
   weight: "400",
   style: ["normal", "italic"],
+  subsets: ["latin"],
+  display: "swap",
+});
+
+const dancingScript = Dancing_Script({
+  variable: "--font-signature",
+  weight: ["400", "600", "700"],
   subsets: ["latin"],
   display: "swap",
 });
@@ -120,7 +133,7 @@ export default function RootLayout({
     <html
       lang="en"
       suppressHydrationWarning
-      className={`${inter.variable} ${schibsted.variable} ${jetbrainsMono.variable} ${instrumentSerif.variable} h-full antialiased`}
+      className={`${inter.variable} ${schibsted.variable} ${jetbrainsMono.variable} ${instrumentSerif.variable} ${dancingScript.variable} h-full antialiased`}
     >
       <head>
         <InlineScript
