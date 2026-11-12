@@ -80,21 +80,21 @@ export function ProjectCard({
           />
 
           {project.badge && (
-            /* A diagonal ribbon band across the corner: both long edges stay
-               parallel and the ends are cut by the card's top and right
-               edges, so it reads as a ribbon rather than a corner triangle. */
+            /* Diagonal ribbon band across the top-right corner: the band is
+               rotated 45° so both long edges are cut by the card's top and
+               right edges, and the label sits centered on the band. */
             <span className="pointer-events-none absolute inset-0 z-10 overflow-hidden">
               <span
-                className="project-ribbon absolute right-0 top-0 flex h-[30px] w-[320px] items-center justify-center whitespace-nowrap text-[9px] font-semibold tracking-wide text-neutral-900"
+                className="project-ribbon absolute right-0 top-0 flex h-8 w-[380px] items-center justify-center whitespace-nowrap text-[11px] font-bold tracking-wide text-neutral-900"
                 style={{
                   transform:
-                    "translate(calc(50% - 30px), calc(-50% + 43px)) rotate(35deg)",
+                    "translate(calc(50% - 45px), calc(-50% + 42px)) rotate(45deg)",
                 }}
               >
-                <span className="relative z-10 inline-flex -translate-x-[19px] translate-y-[5px] items-center gap-1.5">
+                <span className="inline-flex items-center gap-1.5">
                   <span
                     aria-hidden="true"
-                    className="inline-block size-1.5 rounded-full bg-emerald-700"
+                    className="inline-block size-1.5 rounded-full bg-green-600"
                   />
                   {project.badge}
                 </span>
